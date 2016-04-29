@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9e978d5a-7efc-41eb-a790-259850b49d96" name="https://github.com/wine-team/passport.git" url="https://github.com/wine-team/passport.git">
+        <fileTransfer host="https://github.com/wine-team/passport.git" port="21" username="604942578@qq.com">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

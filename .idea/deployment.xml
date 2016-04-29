@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="https://github.com/wine-team/passport.git" uploadOnCheckin="9e978d5a-7efc-41eb-a790-259850b49d96">
+    <serverData>
+      <paths name="https://github.com/wine-team/passport.git">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="https://github.com/wine-team/passport.git" />
+  </component>
+</project>
