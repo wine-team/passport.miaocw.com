@@ -170,4 +170,9 @@ class Login extends MJ_Controller
             $this->jsonMessage('网络繁忙，请稍后重新获取验证码');
         }
     }
+    
+    public function zoudong()
+    {
+        echo 'zoudong';
+    }
 }
