@@ -25,8 +25,7 @@ class Login extends MJ_Controller
         } else {
             $data['backurl'] = $this->config->main_base_url;
         }
-        $data['captcha'] = $this->getCaptcha();
-        $data['err_count'] = get_cookie('err_count');
+      
         $res = $this->advert->findBySourceState(2)->row_array();
         $data['login_bg'] = isset($res['picture']) ? $this->config->show_image_url('advert', $res['picture']) : 'passport/pc/images/login-bg.jpg';
         $this->load->view('pc/login/index', $data);

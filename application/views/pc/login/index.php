@@ -1,101 +1,68 @@
 <?php $this->load->view('pc/layout/header');?>
-
-<div class="bz-login">
-	<div class="login-img">
-       <img src="<?php echo $login_bg?>"/>
-	</div>
-	<div class="login-con">
-		<div class="login">
-			<form class="normal-login login-form-validate" action="<?php echo base_url('pc/login/loginPost');?>" method="post" >
-			    <input type="hidden" name="backurl" value="<?php echo $backurl;?>">
-			    <input class="d-quick" type="hidden" name="act" value="1"/>
-				<ul>
-					<li class="title">会员</li>
-					<li>
-						<div class="remind">
-							<i class="iconfont">&#xe600;</i>
-							<p>公共场所不建议自动登录，以防账号丢失</p>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="init-login">
-							<input type="text" name="username" id="username" class="input-text required"  placeholder="会员名/手机号">
-							<i class="iconfont photo-icon">&#xe603;</i>
-						</div>
-					</li>
-					<li>
-						<div class="login-pwd">
-							<input type="password" name="password" id="password" class="input-text required"  placeholder="密码">
-							<i class="iconfont photo-icon">&#xe602;</i>
-						</div>
-					</li>
-					<li>
-						<div class="remember-pwd clearfix">
-							<label>
-								<input type="checkbox" name="auto_login" checked/>自动登录
-							</label>
-							<a href="<?php echo site_url('pc/forget')?>" class="forget">忘记密码?</a>
-						</div>
-					</li>
-					<li>
-						<div class="erro-code forget-form-account" style="<?php echo $err_count >= 3 ? 'display:block;' : 'display:none;'?>">
-							<input type="text" name="captcha" placeholder="验证码" class="d-captcha"/>
-							<a href="javascript:;" id="ajaxJsonCaptcha" ><?php echo $captcha['image']; ?></a>
-						</div>
-					</li>
-					<li><button type="submit" class="login-submit d-login">登 录</button></li>
-					<li><div class="bz-register">还没有账号，<a href="<?php echo site_url('pc/register')?>">立即注册</a></div></li>
-				</ul>
-				<div class="hd">
-					<img src="passport/pc/images/fast-login.png" />
+<div class="lgbg">
+	<div class="lboby yahei">
+		<div class="lha" id="lha">
+			<h2 class="on">登陆</h2>
+			<h2>注册<em class="h_rt"><i class="r_dop"></i>送10元</em></h2>
+	    </div>
+		<div class="lzone" id="lzone">
+			<div class="lfmo">
+				<form class="loginform" id="loginform" method="post" action="user.php" name="formLogin">
+					<input type="hidden" value="0e1c45616c0cfbbe057c7682b9f3fa1f" id="token" name="token"/>
+					<p>帐号（邮箱/手机号）：</p>
+					<input type="text" value="" class="lpt u_zh" autocomplete="off" name="username" id="username">
+					<p class="clear">输入密码：</p>
+					<input type="password" id="password" autocomplete="off" class="lpt u_mm" name="password">
+					<input type="hidden" name="act" value="act_login"/>
+					<input type="hidden" name="back_act" value="http://vip.yiyanpai.com/"/>
+					<input type="submit" class="lgbtn" value="登录" name="submit"/>
+					<div class="over mt10">
+						<label class="left gray"><input type="checkbox" value="1" name="remember" checked id="remember"/> 下次自动登陆 </label>
+						<a href="javascript:;" class="right gray">忘记密码</a>
+				    </div>
+				</form>
+				<div class="hid" id="lok">
+					<h2 class="yahei f18">登录成功<b id="miao">3</b>秒后自动返回上一页<p>&nbsp;</p></h2>
+					<p class="f12">
+						<a href="javascript:window.location.href=document.referrer;" class="xhb">立即返回</a>
+						<a href="user.php" class="ml10 xhb">进入会员中心</a>
+					</p>
 				</div>
-			</form>
-			<form class="quick-login" action="">
-			    <input type="hidden" name="backurl" value="<?php echo $backurl;?>">
-			    <input class="e-quick" type="hidden" name="act" value="2"/>
-				<ul>
-					<li class="title">手机动态密码登录</li>
-					<li>
-						<div class="remind">
-							<i class="iconfont">&#xe600;</i>
-							<p>公共场所不建议自动登录，以防账号丢失</p>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="init-login">
-							<input class="input-text required" id="mobile_phone" name="mobile_phone" type="text" placeholder="手机" />
-							<i class="iconfont photo-icon">&#xe602;</i>
-						</div>
-					</li>
-					<li>
-					   <div class="fast-login">
-							<div class="input-box">
-								<input class="input-text e-captcha required" id="captcha" name="captcha" type="text" placeholder="验证码" />
-							</div>
-							<a href="javascript:;" class="ajaxJsonCaptcha" ><?php echo $captcha['image']; ?></a>
-						</div>
-						<div class="fast-code clearfix">
-							<div class="pull-left code-w">
-								<input class="input-text required " id="verify" type="text" name="verify" placeholder="请输入动态密码" />
-							</div>
-							<button type="button" class="getpwd btnsend pull-left">获取动态密码</button>
-						</div>
-					</li>
-					<li>
-						<div class="remember-pwd clearfix">
-							<label>
-								<input type="checkbox" checked/>自动登录
-							</label>
-							<a href="<?php echo site_url('pc/forget')?>">忘记密码?</a>
-						</div>
-					</li>
-					<li><button type="submit" class="login-submit e-login">登 录</button></li>
-					<li><div class="bz-register">还没有账号，<a href="<?php echo site_url('pc/register')?>">立即注册</a></div></li>
-				</ul>
-				<div class="hd">
-					<img src="passport/pc/images/members-login.png" />
+			</div>
+			<div class="lfmo hid">
+				<form class="loginform" id="telform" method="post" action="user.php">
+					<input type="hidden" value="0e1c45616c0cfbbe057c7682b9f3fa1f" id="token" name="token"/>
+					<div class="rel prc">
+						<span class="red tts hid" id="t_ts">已被注册</span>
+						<a href="javascript:;" onClick="qieh(this)" class="yxr blue">使用邮箱注册</a>
+						<p id="zlab">手机号注册：</p>
+						<input type="text" value="" class="lpt u_zh" name="mobile_phone" autocomplete="off" id="mobile_phone"/>
+						<input type="text"  value="" class="lpt u_zh hid" name="email" autocomplete="off" id="email"/>
+					</div>
+					<p class="clear">输入密码：</p>
+					<input type="password" id="tpas" autocomplete="off" class="lpt u_mm" name="password">
+					<p class="clear">确认密码：</p>
+					<input type="password" id="cpas" autocomplete="off" class="lpt u_mm" name="cpassword">
+					<input type="checkbox" checked="checked" value="1" name="agreement" class="hid" />
+					<input name="act" type="hidden" value="act_register" />
+					<input type="hidden" name="back_act" value="" />
+					<div class="clear"></div>
+					<p class="alR lh20 mb10"><a href="javascript:;" class="gray" target="_blank">服务条款</a></p>
+					<input type="submit" class="lgbtn" value="立即注册" name="submit"/>
+				</form>
+				<div class="hid lh35" id="rok">
+					<h2 class="yahei f18">注册成功</h2>
+					<p class="mt10">已赠送<b class="red">10</b>元优惠券，订单满100元即可使用</p>
+					<p class="f12"><a href="javascript:window.location.href=document.referrer;" class="xhb">立即返回</a><a href="user.php" class="ml10 xhb">进入会员中心</a></p>
 				</div>
-			</form>
+			</div>
+		</div>
+		<div class="login_f">
+			<em class="c9">使用合作网站账号登录:</em>
+			<a title="使用QQ登录" class="pl10 pr10" href="javascript:;">QQ号登陆</a>
+			<em class="vline">|</em>
+			<a title="使用新浪微博登录" class="pr10" href="javascript:;">微博帐号登陆</a>
+			<p><a href="javascript:window.history.go(-1);" class="c9">返回上一页</a></p>
 		</div>
 	</div>
 </div>
