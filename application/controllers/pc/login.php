@@ -173,6 +173,6 @@ class Login extends MJ_Controller
     
     public function zoudong()
     {
-        echo 'zoudong';
+        echo 'zoudong ceshi';
     }
 }
