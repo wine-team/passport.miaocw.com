@@ -27,8 +27,8 @@ class Login extends MJ_Controller
         }
       
         $res = $this->advert->findBySourceState(2)->row_array();
-        $data['login_bg'] = isset($res['picture']) ? $this->config->show_image_url('advert', $res['picture']) : 'passport/pc/images/login-bg.jpg';
-        $this->load->view('pc/login/index', $data);
+        $data['login_bg'] = isset($res['picture']) ? $this->config->show_image_url('advert', $res['picture']) : 'passport/images/login-bg.jpg';
+        $this->load->view('login/index', $data);
     }
     
     /**
@@ -161,17 +161,12 @@ class Login extends MJ_Controller
         } else {
             $result1 = $this->getpwd_phone->insertGetpwdPhone(array('mobile_phone'=>$phone, 'code'=>$code));
         }
-        $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'正在使用验证码登录贝竹会员，验证码为:'.$code.'，有效期为10分钟，请勿向他人泄漏。');
+        $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'正在使用验证码登录会员，验证码为:'.$code.'，有效期为10分钟，请勿向他人泄漏。');
         $this->db->trans_complete();
         if ($this->db->trans_status() === TRUE) {
             echo json_encode(array('status'=> true));exit;
         } else {
             $this->jsonMessage('网络繁忙，请稍后重新获取验证码');
         }
-    }
-    
-    public function zoudong()
-    {
-        echo 'zoudong ceshi';
     }
 }

@@ -26,7 +26,7 @@ class Register extends MJ_Controller
             $data['parent_id'] = get_cookie('user_name');
         }
         $data['captcha'] = $this->getCaptcha();
-        $this->load->view('pc/register/index', $data);
+        $this->load->view('register/index', $data);
     }
     
     /**
@@ -91,7 +91,7 @@ class Register extends MJ_Controller
         );
         set_cookie('frontUser', serialize($session), 43250);
         $this->memcache->setData('frontUser', serialize($session));
-        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : site_url('pc/register/regsuccess');
+        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : site_url('register/regsuccess');
         echo json_encode(array(
             'status'   => true,
             'messages' => $backurl,
@@ -105,7 +105,7 @@ class Register extends MJ_Controller
     {
         $frontUser = $this->frontUser;
         $data['username'] = $frontUser['OWNER_NAME'];
-        $this->load->view('pc/register/regsuccess', $data);
+        $this->load->view('register/regsuccess', $data);
     }
     
     /**
@@ -187,7 +187,7 @@ class Register extends MJ_Controller
         } else {
             $result1 = $this->getpwd_phone->insertGetpwdPhone(array('mobile_phone'=>$phone, 'code'=>$code));
         }
-        $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'注册贝竹会员，验证码为:'.$code.'，有效期为10分钟。');
+        $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'注册会员，验证码为:'.$code.'，有效期为10分钟。');
         $this->db->trans_complete();
         if ($this->db->trans_status() === TRUE) {
             echo json_encode(array('status'=> true));exit;

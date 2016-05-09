@@ -10,16 +10,16 @@
 <meta name="description"  content="<?php echo isset($headTittle)?$headTittle:'成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品。货到付款、全国保密配送，订购热线888-8888-888!';?>" />
 <title><?php echo isset($headTittle)?$headTittle:'成人用品玩具-男根增大延迟性保健品-夫妻情趣用品-趣网商城(全国货到付款 保密配送)';?></title> 
 <base href="<?php echo $this->config->skins_url;?>"/>
-<link type="image/x-icon" rel="shortcut icon" href="passport/pc/images/logo02.png"/>
+<link type="image/x-icon" rel="shortcut icon" href="passport/images/logo02.png"/>
 <?php css('common', 'common', '20160415');?>
 <?php css('passport/pc', 'reset', '20160415');?>
 <?php css('passport/pc', 'style', '20160415');?>
 
-<?php js('passport/pc', 'jquery-1.10.2');?>
-<?php js('passport/pc', 'jquery.validate.min');?>
-<?php js('passport/pc', 'jquery.validate.messages_zh');?>
+<?php js('passport', 'jquery-1.10.2');?>
+<?php js('passport', 'jquery.validate.min');?>
+<?php js('passport', 'jquery.validate.messages_zh');?>
 <!--[if lt IE 10]>
-<?php js('passport/pc', 'placeholder');?>
+<?php js('passport', 'placeholder');?>
 <![endif]-->
 <!--[if lt IE 9]>
   var qwid=screen.width;
@@ -28,13 +28,13 @@
   }
 <![endif]-->
 <?php js('common', 'common', '20160415');?>
-<?php js('passport/pc', 'index', '20160415');?>
+<?php js('passport', 'index', '20160415');?>
 </head>
 <body>
 <div class="black_tp">
 	<div class="w">
 	    <a href="<?php echo $this->config->main_base_url;?>" class="left">
-	     	<img src="passport/pc/images/logo.png" width="130" height="48">
+	     	<img src="passport/images/logo.png" width="130" height="48">
 	    </a>
 	    <div class="right">
 	    	<a href="<?php echo $this->config->main_base_url;?>" class="ga_a">返回首页</a>

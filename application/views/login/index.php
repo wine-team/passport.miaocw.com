@@ -1,4 +1,4 @@
-<?php $this->load->view('pc/layout/header');?>
+<?php $this->load->view('layout/header');?>
 <div class="lgbg">
 	<div class="lboby yahei">
 		<div class="lha" id="lha">
@@ -66,4 +66,4 @@
 		</div>
 	</div>
 </div>
-<?php $this->load->view('pc/layout/footer');?>
+<?php $this->load->view('layout/footer');?>
