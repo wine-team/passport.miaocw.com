@@ -12,8 +12,8 @@
 <base href="<?php echo $this->config->skins_url;?>"/>
 <link type="image/x-icon" rel="shortcut icon" href="passport/images/logo02.png"/>
 <?php css('common', 'common', '20160415');?>
-<?php css('passport/pc', 'reset', '20160415');?>
-<?php css('passport/pc', 'style', '20160415');?>
+<?php css('passport', 'reset', '20160415');?>
+<?php css('passport', 'style', '20160415');?>
 
 <?php js('passport', 'jquery-1.10.2');?>
 <?php js('passport', 'jquery.validate.min');?>
