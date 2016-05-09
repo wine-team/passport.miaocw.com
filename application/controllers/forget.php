@@ -49,9 +49,6 @@ class Forget extends MJ_Controller
         $this->jsonMessage('', base_url('forget/confirm').'?keycode='.urlencode($encodename));
     }
     
-    public function ceshi()
-    {
-        echo 'ceshi';
-    }
+   
    
 }
