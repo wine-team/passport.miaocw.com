@@ -18,7 +18,7 @@
 					<input type="submit" class="lgbtn" value="登录" name="submit"/>
 					<div class="over mt10">
 						<label class="left gray"><input type="checkbox" value="1" name="remember" checked id="remember"/> 下次自动登陆 </label>
-						<a href="javascript:;" class="right gray">忘记密码</a>
+						<a href="<?php echo site_url('forget/grid');?>" class="right gray">忘记密码</a>
 				    </div>
 				</form>
 				<div class="hid" id="lok">
