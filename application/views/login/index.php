@@ -14,7 +14,7 @@
 					<p class="clear">输入密码：</p>
 					<input type="password" id="password" autocomplete="off" class="lpt u_mm" name="password">
 					<input type="hidden" name="act" value="act_login"/>
-					<input type="hidden" name="back_act" value="http://vip.yiyanpai.com/"/>
+					<input type="hidden" name="back_act" value=""/>
 					<input type="submit" class="lgbtn" value="登录" name="submit"/>
 					<div class="over mt10">
 						<label class="left gray"><input type="checkbox" value="1" name="remember" checked id="remember"/> 下次自动登陆 </label>

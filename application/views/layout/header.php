@@ -27,7 +27,7 @@
      document.write('<?php css('common', 'w9', '20160415');?>');
   }
 <![endif]-->
-<?php js('common', 'common', '20160415');?>
+<?php //js('common', 'common', '20160415');?>
 <?php js('passport', 'index', '20160415');?>
 </head>
 <body>
@@ -38,7 +38,7 @@
 	    </a>
 	    <div class="right">
 	    	<a href="<?php echo $this->config->main_base_url;?>" class="ga_a">返回首页</a>
-	    	<a href="http://app.qu.cn" target="_blank" class="ga_a">趣网APP下载</a>
+	    	<a href="<?php echo $this->config->help_url?>" target="_blank" class="ga_a">趣网APP下载</a>
 	    </div>
 	</div>
 </div>

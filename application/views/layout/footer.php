@@ -2,8 +2,8 @@
 	<div class="r_panel">
 		<ul class="m_mid" id="m_mid">
 			<li class="m_li" id="minarg">
-			    <a href="/flow.php">
-			    	<em class="f">&#xe634;</em>
+			    <a href="javacript:;">
+			    	<em class="f">&#xe603;</em>
 			    	<i id="carr_num">0</i>
 			    </a>
 			    <p class="rt_line"></p>
@@ -22,7 +22,9 @@
 			    <p class="rt_line"></p>
 			</li>
 			<li class="m_li" id="rhist">
-				<a href="javascript:;" class="f">&#xe645;</a>
+				<a href="javascript:;" class="f">
+					<i class="iconfont">&#xe602;</i>
+				</a>
 				<div class="r_av m_tr" id="ghis">
 					<em class="r_vt">◆</em>
 					<h4>浏览历史</h4>
@@ -30,30 +32,40 @@
 				</div>
 			</li>
 			<li class="m_li">
-				<a href="/user.php?act=order_info" target="blank" class="f">&#xe649;</a>
+				<a href="javacript:;" target="blank" class="f">
+					<i class="iconfont">&#xe600;</i>
+				</a>
 				<p class="r_av m_tr">订单查询<em class="r_vt">◆</em></p>
 		    </li>
 			<li class="m_li">
-			     <a href="javascript:alert('请先登录');" class="f">&#xe636;</a>
+			     <a href="javascript:alert('请先登录');" class="f">
+			       <i class="iconfont">&#xe606;</i>
+			     </a>
 			     <p class="r_av m_tr">我的收藏<em class="r_vt">◆</em></p>
 			</li>
 		</ul>
 		<ul class="m_mid" id="m_fid">
 			<li class="m_li">
-				<a href="javascript:;" class="f r_ma"></a>
+				<a href="javascript:;" class="f r_ma">
+					<i class="iconfont">&#xe607;</i>
+				</a>
 				<p class="r_av m_tr" id="m_fma">
 					<img src="http://s.qw.cc/themes/v4/css/2/qapp02.png" width="120" height="135">
 					<em class="r_vt">◆</em>
 				</p>
 			</li>
 			<li class="m_li m_tops">
-				<a href="javascript:;" onClick="gotop()" class="f f20 top">&#xe64b;</a>
+				<a href="javascript:;" class="f f20 top">
+					<i class="iconfont">&#xe604;</i>
+				</a>
 				<p class="r_av m_tr">返回顶部
 					<em class="r_vt">◆</em>
 				</p>
 			</li>
 			<li class="m_li">
-				<a href="javacript:;" class="f f20" target="_blank">&#xe635;</a>
+				<a href="javacript:;" class="f f20" target="_blank">
+					<i class="iconfont">&#xe601;</i>
+				</a>
 				<p class="r_av m_tr">意见反馈
 					<em class="r_vt">◆</em>
 				</p>
@@ -64,7 +76,7 @@
 <div id="footer">
 	<div class="ft_t">
 		<p class="w over">
-			<img src2="passport/images/fbz.png" width="1190" height="48">
+			<img src="passport/images/fbz.png" width="1190" height="48">
 		</p>
 	</div>
 	<div class="w">
