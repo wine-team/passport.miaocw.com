@@ -7,14 +7,12 @@
 	    </div>
 		<div class="lzone" id="lzone">
 			<div class="lfmo">
-				<form class="loginform" id="loginform" method="post" action="user.php" name="formLogin">
-					<input type="hidden" value="0e1c45616c0cfbbe057c7682b9f3fa1f" id="token" name="token"/>
+				<form class="loginform" method="post"  name="formLogin">
 					<p>帐号（邮箱/手机号）：</p>
-					<input type="text" value="" class="lpt u_zh" autocomplete="off" name="username" id="username">
+					<input type="text" value="" class="lpt u_zh" autocomplete="off" name="username" id="username" />
 					<p class="clear">输入密码：</p>
-					<input type="password" id="password" autocomplete="off" class="lpt u_mm" name="password">
-					<input type="hidden" name="act" value="act_login"/>
-					<input type="hidden" name="back_act" value=""/>
+					<input type="password" id="password" autocomplete="off" class="lpt u_mm" name="password" />
+					<input type="hidden" name="back_url" value="<?php echo isset($backurl) ? $backurl :'';?>"/>
 					<input type="submit" class="lgbtn" value="登录" name="submit"/>
 					<div class="over mt10">
 						<label class="left gray"><input type="checkbox" value="1" name="remember" checked id="remember"/> 下次自动登陆 </label>
