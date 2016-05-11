@@ -23,7 +23,7 @@
 					<h2 class="yahei f18">登录成功<b id="miao">3</b>秒后自动返回上一页<p>&nbsp;</p></h2>
 					<p class="f12">
 						<a href="javascript:window.location.href=document.referrer;" class="xhb">立即返回</a>
-						<a href="user.php" class="ml10 xhb">进入会员中心</a>
+						<a href="<?php echo $this->config->ucenter;?>" class="ml10 xhb">进入会员中心</a>
 					</p>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 				<div class="hid lh35" id="rok">
 					<h2 class="yahei f18">注册成功</h2>
 					<p class="mt10">已赠送<b class="red">10</b>元优惠券，订单满100元即可使用</p>
-					<p class="f12"><a href="javascript:window.location.href=document.referrer;" class="xhb">立即返回</a><a href="user.php" class="ml10 xhb">进入会员中心</a></p>
+					<p class="f12"><a href="javascript:location.href=document.referrer;" class="xhb">立即返回</a><a href="<?php echo $this->config->ucenter_url;?>" class="ml10 xhb">进入会员中心</a></p>
 				</div>
 			</div>
 		</div>
@@ -60,7 +60,7 @@
 			<a title="使用QQ登录" class="pl10 pr10" href="javascript:;">QQ号登陆</a>
 			<em class="vline">|</em>
 			<a title="使用新浪微博登录" class="pr10" href="javascript:;">微博帐号登陆</a>
-			<p><a href="javascript:window.history.go(-1);" class="c9">返回上一页</a></p>
+			<p><a href="javascript:history.back()" class="c9">返回上一页</a></p>
 		</div>
 	</div>
 </div>

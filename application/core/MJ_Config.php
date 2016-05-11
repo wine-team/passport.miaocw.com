@@ -6,6 +6,7 @@ class MJ_Config extends CI_Config
     public $skins_url      =  'http://skins.localhost/';  
     public $passport_url   =  'http://passport.localhost/';
     public $help_url       =  'http://help.localhost/';
+    public $ucenter_url    =  'http://ucenter.localhost/';
     
     
     
