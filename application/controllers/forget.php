@@ -1,9 +1,10 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Forget extends MJ_Controller
 {
     public function _init()
     {
-       
+       $this->load->library('encrypt');
     }
     
      /**
@@ -14,7 +15,7 @@ class Forget extends MJ_Controller
         if ($this->frontUser) { //如果已经登录，就跳转到首页。
             $this->redirect($this->config->main_base_url);
         }
-        $captcha = $this->getCaptcha(18, 130, 36);
+        $captcha = $this->getCaptcha(18, 100, 36,4);
         $data['captcha'] = $captcha;
         $this->load->view('forget/grid', $data);
     }
@@ -29,9 +30,9 @@ class Forget extends MJ_Controller
     }
     
     /**
-     * 验证账户
+     * 验证账户 和 发送短信
      */
-    public function alidateUser()
+    public function validateUser()
     {
         $username = $this->input->post('username');
         if ($this->validateParam($username)) {
@@ -45,10 +46,30 @@ class Forget extends MJ_Controller
             $this->jsonMessage('用户名不存在');
         }
         $encodename = $this->encrypt->encode($username);
-        
         $this->jsonMessage('', base_url('forget/confirm').'?keycode='.urlencode($encodename));
     }
     
-   
+     /**
+     * 验证码确认页面
+     */
+    public function confirm(){
+
+    	$encodename = $this->input->get('keycode');
+    	$decodename = $this->encrypt->decode($encodename);
+    	$data['username'] = $decodename;
+    	$this->load->view('forget/confirm',$data);
+    }
+    
+     /**
+      * 更改密码
+     */
+    public function changePassword(){
+
+    	$data[] = array();
+    	$this->load->view('forget/changePassword',$data);
+    }
+    
+    
+    
    
 }

@@ -1,4 +1,5 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class MJ_Controller extends CI_Controller
 {
     protected $frontUser = false;
@@ -42,6 +43,25 @@ class MJ_Controller extends CI_Controller
     public function getErrorMessage()
     {
         return $this->errorMessage;
+    }
+    
+    /**
+     * js提交表单数据提示。
+     * @param unknown $error
+     * @param string $url
+     */
+    public function jsonMessage($error, $url='')
+    {
+    	if (!empty($error)) {
+    		if (is_array($error)) {
+    			$json = array('status'=>false, 'messages'=>implode('\\n', $error));
+    		} else {
+    			$json = array('status'=>false, 'messages'=>$error);
+    		}
+    	} else {
+    		$json = array('status'=>true, 'messages'=>$url);
+    	}
+    	echo json_encode($json);exit;
     }
     
     /**
