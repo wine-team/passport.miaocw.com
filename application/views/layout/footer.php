@@ -47,13 +47,13 @@
 				</p>
 			</li>
 			<li class="m_li m_tops">
-				<a href="javascript:;" onClick="gotop()" class="f f20 top">&#xe64b;</a>
+				<a href="javascript:;" onClick="gotop()" class="f f20 top">&#xe600;</a>
 				<p class="r_av m_tr">返回顶部
 					<em class="r_vt">◆</em>
 				</p>
 			</li>
 			<li class="m_li">
-				<a href="javacript:;" class="f f20" target="_blank">&#xe635;</a>
+				<a href="javacript:;" class="f iconfont" target="_blank">&#xe600;</a>
 				<p class="r_av m_tr">意见反馈
 					<em class="r_vt">◆</em>
 				</p>
