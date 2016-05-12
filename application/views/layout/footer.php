@@ -63,7 +63,7 @@
 </div>
 <div id="footer">
 	<div class="ft_t">
-		<p class="w over">
+		<p class="w over"> 
 			<img src2="passport/images/fbz.png" width="1190" height="48">
 		</p>
 	</div>
