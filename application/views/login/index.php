@@ -7,24 +7,22 @@
 	    </div>
 		<div class="lzone" id="lzone">
 			<div class="lfmo">
-				<form class="loginform" id="loginform" method="post" action="user.php" name="formLogin">
-					<input type="hidden" value="0e1c45616c0cfbbe057c7682b9f3fa1f" id="token" name="token"/>
+				<form class="loginform" id="loginform" method="post" name="formLogin">
 					<p>帐号（邮箱/手机号）：</p>
-					<input type="text" value="" class="lpt u_zh" autocomplete="off" name="username" id="username">
+					<input type="text" value="" class="lpt u_zh" autocomplete="off" name="user_name" id="username">
 					<p class="clear">输入密码：</p>
 					<input type="password" id="password" autocomplete="off" class="lpt u_mm" name="password">
-					<input type="hidden" name="act" value="act_login"/>
-					<input type="hidden" name="back_act" value="http://vip.yiyanpai.com/"/>
-					<input type="submit" class="lgbtn" value="登录" name="submit"/>
+					<input type="hidden" name="back_url" value="<?php echo isset($backurl) ? $backurl:'';?>"/>
+					<input type="submit" class="lgbtn" value="登录" />
 					<div class="over mt10">
 						<label class="left gray"><input type="checkbox" value="1" name="remember" checked id="remember"/> 下次自动登陆 </label>
-						<a href="javascript:;" class="right gray">忘记密码</a>
+						<a href="<?php echo site_url('forget/index');?>" class="right gray">忘记密码</a>
 				    </div>
 				</form>
 				<div class="hid" id="lok">
 					<h2 class="yahei f18">登录成功<b id="miao">3</b>秒后自动返回上一页<p>&nbsp;</p></h2>
 					<p class="f12">
-						<a href="javascript:window.location.href=document.referrer;" class="xhb">立即返回</a>
+						<a href="javascript:history.back();" class="xhb">立即返回</a>
 						<a href="user.php" class="ml10 xhb">进入会员中心</a>
 					</p>
 				</div>

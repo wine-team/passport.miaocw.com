@@ -62,6 +62,25 @@ class MJ_Controller extends CI_Controller
     }
     
     /**
+     * js提交表单数据提示。
+     * @param unknown $error
+     * @param string $url
+     */
+    public function jsonMessage($error, $url='')
+    {
+    	if (!empty($error)) {
+    		if (is_array($error)) {
+    			$json = array('status'=>false, 'messages'=>implode('\\n', $error));
+    		} else {
+    			$json = array('status'=>false, 'messages'=>$error);
+    		}
+    	} else {
+    		$json = array('status'=>true, 'messages'=>$url);
+    	}
+    	echo json_encode($json);exit;
+    }
+    
+    /**
      * 验证参数，如果参数有一个为空，则返回true
      * @param  $postData
      * @return boolean
