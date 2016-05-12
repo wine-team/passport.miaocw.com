@@ -11,7 +11,7 @@ class Login extends MJ_Controller
     }
     
     public function index()
-    {
+    {   
         if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
@@ -31,78 +31,31 @@ class Login extends MJ_Controller
         $this->load->view('login/index', $data);
     }
     
-    /**
+     /**
      * 登录提交页面
      */
     public function loginPost()
     {
-        $d = $this->input->post();
-        //会员登录
-        if (!empty($d['act']) && $d['act'] == 1) {
-            $err_count = get_cookie('err_count');
-            $result = $this->user->login($d);
-            if ($result->num_rows() <=0) {
-                set_cookie('err_count', $err_count + 1, 43200);
-                echo json_encode(array(
-                    'status'  => false,
-                    'messages' => '用户名或密码错误',
-                    'data' => $err_count
-                ));exit;
-            }
-            $user = $result->row();
-            if ($user->flag == 2) {
-                set_cookie('err_count', $err_count + 1, 43200);
-                echo json_encode(array(
-                    'status'  => false,
-                    'messages' => '此帐号已被冻结，请与管理员联系',
-                    'data' => $err_count
-                ));exit;
-            }
-            //验证码验证
-            if ($err_count >= 3) {
-                if (strtoupper($d['captcha']) != strtoupper(get_cookie('captcha'))) {
-                    echo json_encode(array(
-                        'status'  => false,
-                        'messages' => '验证码不正确',
-                        'input' => 'captcha'
-                    ));exit;
-                }
-            }
-            delete_cookie('err_count');
-        //快捷登录
-        }else{
-            $user = $this->user->quick_login($d);
+        $postData = $this->input->post();
+        $result = $this->user->login($postData);
+        if( $result->num_rows()<=0 ){
+        	$this->jsonMessage('账号或密码错误');
         }
-        
-        $this->user->visitCount($user->uid); //统计用户登录次数。
-        $userType = $this->usertype($user->user_type);
-        $session = array(
-            'ACT_UID'      => $user->uid,
-            'ACT_UTID'     => $user->user_type,
-            'ACT_TYPENAME' => urlencode($userType['type_zh']),
-            'ACT_TYPE'     => $userType['type_en'],
-            'ACT_EXTRA'    => $user->extra,
-            'ALIAS_NAME'   => urlencode($user->alias_name),
-            'OWNER_ID'     => $user->uid,
-            'OWNER_NAME'   => $user->user_name,
-            'PARENT_ID'    => $user->parent_id,
+        $user = $result->row(0);
+        if($user->flag==2){
+        	$this->jsonMessage('账号被冻结');
+        }
+        $userInfor = array(
+        	'uid' => $user->uid,
+            'userName' => $user->user_name
         );
-        set_cookie('frontUser', serialize($session), 86400);
-        $this->memcache->setData('frontUser', serialize($session));
-        if (($user->user_type & UTID_PROVIDER) || ($user->user_type & UTID_TELLER)) {
-            $directUrl = $this->config->gongying_url;
-        } else if ($this->input->post('backurl')) {
-            $directUrl = $this->input->post('backurl');
-        } else {
-            $directUrl = $this->config->main_base_url;
-        }
-        echo json_encode(array(
-            'status'  => true,
-            'messages' => $directUrl
-        ));exit;
+        $expireTime = empty($postData['remember']) ? 7200 : 435200;
+        set_cookie('frontUser',serialize($userInfor),$expireTime);
+        $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
+        $this->jsonMessage('',$backUrl);
     }
     
-    /**
+     /**
      * 退出登陆
      */
     public function logout()
@@ -110,33 +63,9 @@ class Login extends MJ_Controller
         if (get_cookie('frontUser')) {
             delete_cookie('frontUser');
         }
-        if (get_cookie('bz_session')) {
-            delete_cookie('bz_session');
-        }
-        $this->memcache->deleteMemcache('frontUser');
         $this->redirect($this->config->main_base_url);
     }
     
-    /**
-     * 同步手机帐号
-     * @param 每页条数 $page_num
-     * @param 第几条开始 $num
-     */
-    public function sync($page_num, $num)
-    {
-        $total = $this->user->total();
-        $result = $this->user->page_list($page_num, $num);
-        if ($result->num_rows()) {
-            foreach ($result->result() as $item) {
-                if (valid_mobile($item->cellphone)) {
-                    $this->user->updateUser($item->uid, $item->cellphone);
-                }
-            }
-            echo '信息同步完成，还剩余'.($total-$page_num).'条。';exit;
-        } else {
-            echo '无信息可同步';exit;
-        }
-    }
     
     /**
      * 验证登录页手机动态码
