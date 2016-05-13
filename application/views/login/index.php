@@ -28,8 +28,7 @@
 				</div>
 			</div>
 			<div class="lfmo hid">
-				<form class="loginform" id="telform" method="post" action="user.php">
-					<input type="hidden" value="0e1c45616c0cfbbe057c7682b9f3fa1f" id="token" name="token"/>
+				<form class="loginform" id="telform">
 					<div class="rel prc">
 						<span class="red tts hid" id="t_ts">已被注册</span>
 						<a href="javascript:;" onClick="qieh(this)" class="yxr blue">使用邮箱注册</a>

@@ -17,7 +17,7 @@ class Forget extends MJ_Controller
         if ($this->frontUser) { //如果已经登录，就跳转到首页。
             $this->redirect($this->config->main_base_url);
         }
-        $captcha = $this->getCaptcha(18, 130, 36);
+        $captcha = $this->getCaptcha(18, 130, 36,4);
         $data['captcha'] = $captcha;
         $this->load->view('forget/index', $data);
     }
@@ -163,7 +163,7 @@ class Forget extends MJ_Controller
     /**
      * 设置密码成功页面
      */
-    public function success()
+    public function successChange()
     {
         if ($this->frontUser) { //如果已经登录，就跳转到首页。
             $this->redirect($this->config->main_base_url);
