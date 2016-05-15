@@ -3,10 +3,11 @@ class Login extends MJ_Controller
 {
     public function _init()
     {
-        $this->load->helper(array('email'));
+        $this->load->helper(array('ip'));
         $this->load->library(array('encrypt', 'sms/sms'));
         $this->load->model('advert_model', 'advert');
         $this->load->model('user_model', 'user');
+        $this->load->model('user_log_model','user_log');
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
     }
     
@@ -37,6 +38,12 @@ class Login extends MJ_Controller
     public function loginPost()
     {
         $postData = $this->input->post();
+        if($this->validateParam($postData['user_name'])){
+        	$this->jsonMessage('请输入用户名');
+        }
+        if($this->validateParam($postData['password'])){
+        	$this->jsonMessage('请输入用户名');
+        }
         $result = $this->user->login($postData);
         if( $result->num_rows()<=0 ){
         	$this->jsonMessage('账号或密码错误');
@@ -47,11 +54,19 @@ class Login extends MJ_Controller
         }
         $userInfor = array(
         	'uid' => $user->uid,
-            'userName' => $user->user_name
+            'userName' => $postData['user_name']
         );
-        $expireTime = empty($postData['remember']) ? 7200 : 435200;
+        $expireTime = empty($postData['remember']) ? 7200 : 435200;//是不是永久登陆
         set_cookie('frontUser',serialize($userInfor),$expireTime);
         $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
+        $param = array(
+        		   'uid'  => $user->uid,
+        		   'log_time' => date('Y-m-d H:i:s'),
+                   'ip_from'  => getIP(),
+        		   'operate_type'  => 1,
+        		   'status' => 1
+        );
+        $this->user_log->insertUserLog($param);
         $this->jsonMessage('',$backUrl);
     }
     
@@ -67,7 +82,7 @@ class Login extends MJ_Controller
     }
     
     
-    /**
+     /**
      * 验证登录页手机动态码
      * cyl
      */

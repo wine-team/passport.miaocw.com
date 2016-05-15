@@ -3,7 +3,7 @@
 		<ul class="m_mid" id="m_mid">
 			<li class="m_li" id="minarg">
 				<a href="javacript:;">
-					<em class="f">&#xe603;</em>
+					<i class="f iconfont">&#xe603;</i>
 					<i id="carr_num">0</i>
 				</a>
 				<p class="rt_line"></p>

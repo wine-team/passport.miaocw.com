@@ -11,7 +11,7 @@ class User_model extends CI_Model
     public function login($postData)
     {
         $user_name = trim(addslashes($postData['user_name']));
-        $this->db->where("(`user_name`='{$user_name}' OR `phone`='{$user_name}')");
+        $this->db->where("(`phone`='{$user_name}' OR `email`='{$user_name}')");
         $this->db->where('password', sha1(base64_encode((trim($postData['password'])))));
         return $this->db->get($this->table);
     }
@@ -23,7 +23,8 @@ class User_model extends CI_Model
      */
     public function validateName($userName)
     {
-        $this->db->where('user_name', $userName);
+    	$user_name = trim(addslashes($userName));
+    	$this->db->where("(`phone`='{$user_name}' OR `email`='{$user_name}')");
         return $this->db->get($this->table);
     }
     
@@ -42,23 +43,33 @@ class User_model extends CI_Model
      * @param unknown $postData
      * @param string $parent_id
      */
-    public function insertUser($postData=array(), $parent_id=UTID_BEIZHU)
+    public function insertUser($postData=array())
     {
         $data = array(
-            'user_name'      => $postData['username'],
             'alias_name'     => $postData['username'],
+            'password'       => sha1(base64_encode($postData['password'])),
+            'parent_id'      => '0',
+            'flag'           => '1',
+            'sms'            => '1',
+            'created_at'     => date('Y-m-d H:i:s')
         );
-        
+        if( $postData['type'] == 1 ){
+            $data['phone'] = $postData['username'];
+        }
+        if( $postData['type'] == 2 ) {
+        	$data['email'] = $postData['username'];
+        }
         $this->db->insert($this->table, $data);
         return $this->db->insert_id();
     }
     
     public function modifyPassword($postData=array())
     {
+    	$user_name = trim(addslashes($postData['user_name']));
         $data = array(
-            'password' => sha1($postData['password']),
+            'password' => sha1(base64_encode($postData['password'])),
         );
-        $this->db->where('user_name', $postData['user_name']);
+        $this->db->where("(`phone`='{$user_name}' OR `email`='{$user_name}')");
         return $this->db->update($this->table, $data);
     }
     

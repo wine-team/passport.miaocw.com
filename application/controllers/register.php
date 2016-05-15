@@ -4,94 +4,65 @@ class Register extends MJ_Controller
     public function _init()
     {
         $this->load->helper(array('email'));
-        $this->load->library(array('encrypt', 'sms/sms'));
+        $this->load->library(array('encrypt'));
         $this->load->model('user_model', 'user');
-        $this->load->model('user_account_model', 'user_account');
-        $this->load->model('user_detail_model', 'user_detail');
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
     }
     
-    /**
-     * 注册页面
+     /**
+     *注册页面
      */
     public function index()
     {
         if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
-        $username = $this->input->get('username');
-        if (!empty($username)) {
-            $data['parent_id'] = $username;
-        } else {
-            $data['parent_id'] = get_cookie('user_name');
-        }
-        $data['captcha'] = $this->getCaptcha();
-        $this->load->view('register/index', $data);
+        $this->load->view('login/index',$data);
     }
     
     /**
-     * 注册提交页面
+     *注册提交页面
      */
     public function doRegister()
     {
         $username = $this->input->post('username');
-        $mobilePhone = $this->input->post('mobile_phone');
-        if (!valid_mobile($mobilePhone)) {
-            $this->jsonMessage('手机号码格式有误');
+        $type = $this->input->post('type');  //1手机注册  2邮箱注册
+        $type = ( ($type==1)||($type==2) ) ? $type : '1' ;//以防别人修改type值
+        if ($this->validateParam($username)){
+        	$this->jsonMessage('请输入用户名');
         }
+        if (strlen($this->input->post('password'))<6 || strlen($this->input->post('confirm_password'))<6){
+        	$this->jsonMessage('密码长度不小于6位');
+        }
+        if ($type == 1){
+	        if (!valid_mobile($username) ) {
+	            $this->jsonMessage('手机号码格式有误');
+	        }
+    	}
+    	if ($type == 2){
+    		if (!valid_email($username)){
+    			$this->jsonMessage('邮箱格式有误');
+    		}
+    	}
         if ($this->input->post('password') != $this->input->post('confirm_password')) {
             $this->jsonMessage('密码输入不一致');
         }
-        if (!$this->input->post('is_check')) {
-            $this->jsonMessage('用户协议必选');
-        }
-        $verify = $this->getpwd_phone->validateName($this->input->post(), true);
-        if ($verify->num_rows() <= 0) { //验证码无效
-            $this->jsonMessage('动态密码无效');
-        }
-        $result = $this->user->validateName($this->input->post('username'));
+        $result = $this->user->validateName($username);
         if ($result->num_rows() > 0) {
             $this->jsonMessage('该用户名已经存在');
         }
-        $result = $this->user->validateMobilePhone($this->input->post('mobile_phone'));
-        if ($result->num_rows() > 0) {
-            $this->jsonMessage('该手机号码已经注册');
-        }
-        if ($this->input->post('parent_id')) {
-            $parent = $this->user->validateName($this->input->post('parent_id'));
-            if ($parent->num_rows() > 0) {
-                $parent_id = $parent->row()->uid;
-            } else {
-                $this->jsonMessage('推荐人不存在');
-            }
-        } else {
-            $parent_id = UTID_BEIZHU;
-        }
-        
         $this->db->trans_start();
-        $userId = $this->user->insertUser($this->input->post(), $parent_id);
-        $userAccountId = $this->user_account->insertUserAccount($this->input->post(), $userId, $parent_id);
-        $userDetailId = $this->user_detail->insertUserDetail($this->input->post(), $userId);
+        $userId = $this->user->insertUser($this->input->post());
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             $this->jsonMessage('服务器忙，请稍候再试');
         }
-        
-        $userType = $this->usertype(UTID_CUSTOMER);
-        $session = array(
-            'ACT_UID'      => $userId,
-            'ACT_UTID'     => UTID_CUSTOMER,
-            'ACT_TYPENAME' => urlencode($userType['type_zh']),
-            'ACT_TYPE'     => $userType['type_en'],
-            'ACT_EXTRA'    => 0,
-            'ALIAS_NAME'   => urlencode($username),
-            'OWNER_ID'     => $userId,
-            'OWNER_NAME'   => $username,
-            'PARENT_ID'    => $parent_id,
+        $userInfor = array(
+        		'uid' => $userId,
+        		'userName' => $username
         );
-        set_cookie('frontUser', serialize($session), 43250);
-        $this->memcache->setData('frontUser', serialize($session));
-        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : site_url('register/regsuccess');
+        set_cookie('frontUser', serialize($userInfor), 43250);
+        $backurl = $this->input->post('back_url') ? urldecode($this->input->post('back_url')) : $this->config->ucenter_url;
         echo json_encode(array(
             'status'   => true,
             'messages' => $backurl,

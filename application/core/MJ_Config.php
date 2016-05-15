@@ -5,8 +5,7 @@ class MJ_Config extends CI_Config
 	public $images_url     =  'http://images.localhost/'; 
     public $skins_url      =  'http://skins.localhost/';  
     public $passport_url   =  'http://passport.localhost/';
-    
-    
+    public $ucenter_url    =  'http://ucenter.localhost/';
     
      /**
      * 图片上传路径
