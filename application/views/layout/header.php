@@ -39,7 +39,7 @@
 	    </a>
 	    <div class="right">
 	    	<a href="<?php echo $this->config->main_base_url;?>" class="ga_a">返回首页</a>
-	    	<a href="http://app.qu.cn" target="_blank" class="ga_a">趣网APP下载</a>
+	    	<a href="<?php echo $this->config->help_url;?>" target="_blank" class="ga_a">趣网APP下载</a>
 	    </div>
 	</div>
 </div>

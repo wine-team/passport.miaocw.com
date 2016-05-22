@@ -43,7 +43,7 @@
 					<input type="hidden" name="back_url" value="<?php echo isset($backurl) ? $backurl:'';?>" />
 					<div class="clear"></div>
 					<p class="alR lh20 mb10">
-					    <a href="<?php echo $this->config->ucenter_url;?>" class="gray" target="_blank">服务条款</a>
+					    <a href="<?php echo $this->config->help_url;?>" class="gray" target="_blank">服务条款</a>
 					</p>
 					<input type="submit" class="lgbtn" value="立即注册" name="submit"/>
 				</form>
