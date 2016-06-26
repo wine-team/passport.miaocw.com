@@ -34,7 +34,7 @@
 <body>
 <div class="black_tp">
 	<div class="w">
-	    <a href="<?php echo $this->config->main_base_url;?>" class="left">
+	    <a href="<?php echo $this->config->main_base_url.'home/home/grid';?>" class="left" target="_blank">
 	     	<img src="passport/images/logo.png" width="130" height="48">
 	    </a>
 	    <div class="right">
