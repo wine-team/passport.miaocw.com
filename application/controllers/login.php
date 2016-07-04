@@ -14,7 +14,7 @@ class Login extends MJ_Controller
     public function index()
     {   
     	if ($this->frontUser) {
-            $this->redirect($this->config->main_base_url);
+            $this->redirect($this->config->main_base_url.'home/home/grid');
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
             $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
@@ -24,7 +24,7 @@ class Login extends MJ_Controller
                 $data['backurl'] = $_SERVER['HTTP_REFERER'];
             }
         } else {
-            $data['backurl'] = $this->config->main_base_url;
+            $data['backurl'] = $this->config->main_base_url.'home/home/grid';
         }
         $this->load->view('login/index', $data);
     }
@@ -55,7 +55,7 @@ class Login extends MJ_Controller
         );
         $expireTime = empty($postData['remember']) ? 7200 : 435200;//是不是永久登陆
         set_cookie('frontUser',serialize($userInfor),$expireTime);
-        $this->cache->memcached->save('frontUser', serialize($userInfor));
+        $this->cache->memcached->save('frontUser', serialize($userInfor),$expireTime);
         $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
         $param = array(
         		   'uid'  => $user->uid,
