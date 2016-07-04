@@ -13,7 +13,6 @@ class MJ_Controller extends CI_Controller
         if($frontUser){
         	$this->frontUser = unserialize(preg_replace_callback( '!s:(\d+):"(.*?)";!s', function($m){return 's:'.strlen($m[2]).':"'.$m[2].'";';}, $frontUser));
             $this->uid = $this->frontUser['uid'];
-            $this->userType = $this->frontUser['userType'];
             $this->userName = $this->frontUser['userName'];
         }
         $this->_init(); //用着重载

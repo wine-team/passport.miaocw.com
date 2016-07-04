@@ -4,7 +4,7 @@ class Login extends MJ_Controller
     public function _init()
     {
         $this->load->helper(array('ip'));
-        $this->load->library(array('encrypt', 'sms/sms'));
+        $this->load->library(array('encrypt', 'sms'));
         $this->load->model('advert_model', 'advert');
         $this->load->model('user_model', 'user');
         $this->load->model('user_log_model','user_log');
@@ -13,7 +13,7 @@ class Login extends MJ_Controller
     
     public function index()
     {   
-        if ($this->frontUser) {
+    	if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
@@ -55,6 +55,7 @@ class Login extends MJ_Controller
         );
         $expireTime = empty($postData['remember']) ? 7200 : 435200;//是不是永久登陆
         set_cookie('frontUser',serialize($userInfor),$expireTime);
+        $this->cache->memcached->save('frontUser', serialize($userInfor));
         $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
         $param = array(
         		   'uid'  => $user->uid,
