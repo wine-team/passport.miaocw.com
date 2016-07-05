@@ -3,7 +3,6 @@ class User_model extends CI_Model
 {
     private $table = 'user';
     private $table_2 = 'getpwd_phone';
-
     /**
      * 登陆获取
      * @param unknown $postData
@@ -16,7 +15,6 @@ class User_model extends CI_Model
         return $this->db->get($this->table);
     }
     
-
     /**
      * 验证用户名
      * @param unknown $userName

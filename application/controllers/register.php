@@ -139,7 +139,6 @@ class Register extends MJ_Controller
     {
         $phone = $this->input->post('phone');
         $captcha = $this->input->post('captcha');
-
         if (strtoupper($captcha) != strtoupper(get_cookie('captcha'))) {
             $this->jsonMessage('验证码不正确');
         }

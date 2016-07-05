@@ -4,7 +4,7 @@ class Login extends MJ_Controller
     public function _init()
     {
         $this->load->helper(array('ip'));
-        $this->load->library(array('encrypt', 'sms/sms'));
+        $this->load->library(array('encrypt', 'sms'));
         $this->load->model('advert_model', 'advert');
         $this->load->model('user_model', 'user');
         $this->load->model('user_log_model','user_log');
@@ -13,8 +13,8 @@ class Login extends MJ_Controller
     
     public function index()
     {   
-        if ($this->frontUser) {
-            $this->redirect($this->config->main_base_url);
+    	if ($this->frontUser) {
+            $this->redirect($this->config->main_base_url.'home/home/grid');
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
             $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
@@ -24,11 +24,8 @@ class Login extends MJ_Controller
                 $data['backurl'] = $_SERVER['HTTP_REFERER'];
             }
         } else {
-            $data['backurl'] = $this->config->main_base_url;
+            $data['backurl'] = $this->config->main_base_url.'home/home/grid';
         }
-      
-        $res = $this->advert->findBySourceState(2)->row_array();
-        $data['login_bg'] = isset($res['picture']) ? $this->config->show_image_url('advert', $res['picture']) : 'passport/images/login-bg.jpg';
         $this->load->view('login/index', $data);
     }
     
@@ -57,7 +54,8 @@ class Login extends MJ_Controller
             'userName' => $postData['user_name']
         );
         $expireTime = empty($postData['remember']) ? 7200 : 435200;//是不是永久登陆
-        set_cookie('frontUser',serialize($userInfor),$expireTime);
+        set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
+        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),$expireTime);
         $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
         $param = array(
         		   'uid'  => $user->uid,
@@ -78,7 +76,8 @@ class Login extends MJ_Controller
         if (get_cookie('frontUser')) {
             delete_cookie('frontUser');
         }
-        $this->redirect($this->config->main_base_url);
+        $this->cache->memcached->delete('frontUser');
+        $this->redirect($this->config->main_base_url.'home/home/grid');
     }
     
     
