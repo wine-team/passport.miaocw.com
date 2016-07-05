@@ -54,7 +54,8 @@ class Login extends MJ_Controller
             'userName' => $postData['user_name']
         );
         $expireTime = empty($postData['remember']) ? 7200 : 435200;//是不是永久登陆
-        set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
+         set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
+        $this->cache->memcached->save('frontUser', serialize($userInfor),$expireTime);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),$expireTime);
         $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
         $param = array(
