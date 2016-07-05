@@ -76,7 +76,8 @@ class Login extends MJ_Controller
         if (get_cookie('frontUser')) {
             delete_cookie('frontUser');
         }
-        $this->redirect($this->config->main_base_url);
+        $this->cache->memcached->delete('frontUser');
+        $this->redirect($this->config->main_base_url.'home/home/grid');
     }
     
     
