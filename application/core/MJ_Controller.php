@@ -13,7 +13,6 @@ class MJ_Controller extends CI_Controller
         if($frontUser){
         	$this->frontUser = unserialize( base64_decode($frontUser) );
             $this->uid = $this->frontUser['uid'];
-            $this->userType = $this->frontUser['userType'];
             $this->userName = $this->frontUser['userName'];
         }
         $this->_init(); //用着重载
