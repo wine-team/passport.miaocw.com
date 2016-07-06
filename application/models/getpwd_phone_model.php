@@ -2,7 +2,6 @@
 class Getpwd_phone_model extends CI_Model
 {
     private $table = 'getpwd_phone';
-
     public function __construct()
     {
         parent::__construct();

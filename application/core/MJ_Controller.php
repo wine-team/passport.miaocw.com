@@ -11,7 +11,7 @@ class MJ_Controller extends CI_Controller
         parent::__construct();
         $frontUser = get_cookie('frontUser');
         if($frontUser){
-        	$this->frontUser = unserialize( base64_decode($frontUser) );
+        	$this->frontUser = unserialize( base64_decode($frontUser) ); 
             $this->uid = $this->frontUser['uid'];
             $this->userName = $this->frontUser['userName'];
         }
