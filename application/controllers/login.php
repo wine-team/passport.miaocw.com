@@ -13,7 +13,7 @@ class Login extends MJ_Controller
     
     public function index()
     {   
-    	if ($this->frontUser) {
+    	 if ($this->frontUser) {
              $this->redirect($this->config->main_base_url);
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
