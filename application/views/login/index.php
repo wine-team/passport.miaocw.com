@@ -1,11 +1,11 @@
 <?php $this->load->view('layout/header');?>
-<div class="lgbg">
+<div class="lgbg" style="background:url(<?php echo $this->config->show_image_url('advert',$loginBack->picture);?>) 50% 0 repeat;">
 	<div class="lboby yahei">
 		<div class="lha" id="lha">
 			<h2 class="on">登陆</h2>
 			<h2>注册<em class="h_rt"><i class="r_dop"></i>送10元</em></h2>
 	    </div>
-		<div class="lzone" id="lzone">
+		<div class="lzone" id="lzone" >
 			<div class="lfmo">
 				<form class="loginform" id="loginform" method="post" name="formLogin">
 					<p>帐号（邮箱/手机号）：</p>
