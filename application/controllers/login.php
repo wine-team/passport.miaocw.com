@@ -13,8 +13,8 @@ class Login extends MJ_Controller
     
     public function index()
     {   
-    	 if ($this->frontUser) {
-             $this->redirect($this->config->main_base_url);
+    	if ($this->frontUser) {
+            $this->redirect($this->config->main_base_url);
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
             $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
@@ -53,7 +53,7 @@ class Login extends MJ_Controller
         	'uid' => $user->uid,
             'userName' => $postData['user_name']
         );
-        $expireTime = empty($postData['remember']) ? 7200 : 435200;//是不是永久登陆
+        $expireTime = empty($postData['remember']) ? 7200 : 7200;//是不是永久登陆
         set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),$expireTime);
         $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];

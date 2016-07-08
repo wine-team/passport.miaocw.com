@@ -520,4 +520,6 @@ class MJ_Controller extends CI_Controller
         return $imagesName;
     }
     
+    
+    
 }
