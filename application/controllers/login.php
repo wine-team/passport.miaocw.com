@@ -1,5 +1,5 @@
 <?php 
-class Login extends MJ_Controller
+class Login extends MW_Controller
 {
     public function _init()
     {
@@ -13,6 +13,7 @@ class Login extends MJ_Controller
     
     public function index()
     {   
+    	
     	if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
@@ -26,6 +27,7 @@ class Login extends MJ_Controller
         } else {
             $data['backurl'] = $this->config->main_base_url;
         }
+        $data['loginBack'] = $this->advert->findBySourceState($source_state=2)->row(0);
         $this->load->view('login/index', $data);
     }
     
@@ -34,7 +36,8 @@ class Login extends MJ_Controller
      */
     public function loginPost()
     {
-        $postData = $this->input->post();
+    	
+    	$postData = $this->input->post();
         if($this->validateParam($postData['user_name'])){
         	$this->jsonMessage('请输入用户名');
         }

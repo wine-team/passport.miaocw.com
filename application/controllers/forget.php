@@ -1,5 +1,5 @@
 <?php
-class Forget extends MJ_Controller
+class Forget extends MW_Controller
 {
     public function _init()
     {
