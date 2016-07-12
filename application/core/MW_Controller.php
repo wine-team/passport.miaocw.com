@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class MJ_Controller extends CI_Controller
+class MW_Controller extends CI_Controller
 {
     protected $frontUser = false;
     public $uid;
@@ -519,5 +519,7 @@ class MJ_Controller extends CI_Controller
         }
         return $imagesName;
     }
+    
+    
     
 }

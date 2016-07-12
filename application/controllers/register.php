@@ -1,5 +1,5 @@
 <?php 
-class Register extends MJ_Controller
+class Register extends MW_Controller
 {
     public function _init()
     {

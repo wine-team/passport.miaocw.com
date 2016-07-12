@@ -21,24 +21,14 @@
 <!--[if lt IE 10]>
 <?php js('passport', 'placeholder');?>
 <![endif]-->
-<!--[if lt IE 9]>
-  var qwid=screen.width;
-  if(qwid <= 1220) {
-     document.write('<?php css('common', 'w9', '20160415');?>');
-  }
-<![endif]-->
-<?php js('common', 'common', '20160415');?>
+
 <?php js('passport', 'index', '20160415');?>
 </head>
 <body>
 <div class="black_tp">
 	<div class="w">
-	    <a href="<?php echo $this->config->main_base_url.'home/home/grid';?>" class="left" target="_blank">
-	     	<img src="passport/images/logo.png" width="130" height="48">
+	    <a href="<?php echo $this->config->main_base_url;?>" class="left" target="_blank">
+	     	<img src="passport/images/logo.png" width="130" height="48" />
 	    </a>
-	    <div class="right">
-	    	<a href="<?php echo $this->config->main_base_url;?>" class="ga_a">返回首页</a>
-	    	<a href="<?php echo $this->config->help_url;?>" target="_blank" class="ga_a">趣网APP下载</a>
-	    </div>
 	</div>
 </div>

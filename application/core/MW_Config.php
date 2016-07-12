@@ -1,5 +1,5 @@
 <?php
-class MJ_Config extends CI_Config 
+class MW_Config extends CI_Config 
 {
 	public $main_base_url  =  'http://miaow.localhost/';
 	public $images_url     =  'http://images.localhost/';

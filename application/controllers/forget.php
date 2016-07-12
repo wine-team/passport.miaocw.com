@@ -1,10 +1,10 @@
 <?php
-class Forget extends MJ_Controller
+class Forget extends MW_Controller
 {
     public function _init()
     {
         $this->load->helper(array('email'));
-        $this->load->library(array('encrypt', 'sms/sms'));
+        $this->load->library(array('encrypt', 'sms'));
         $this->load->model('user_model', 'user');
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
     }
