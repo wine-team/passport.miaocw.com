@@ -7,15 +7,16 @@
 <meta name="renderer" content="webkit">
 <meta name="title"  content="<?php echo isset($headTittle)?$headTittle:'成人用品玩具-男根增大延迟性保健品-夫妻情趣用品-趣网商城(全国货到付款 保密配送)';?>"/>
 <meta name="keywords" content="<?php echo isset($headTittle)?$headTittle:'成人,用品,玩具,延时，增大，助勃';?>" />
-<meta name="description"  content="<?php echo isset($headTittle)?$headTittle:'成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品。货到付款、全国保密配送，订购热线888-8888-888!';?>" />
-<title><?php echo isset($headTittle)?$headTittle:'成人用品玩具-男根增大延迟性保健品-夫妻情趣用品-趣网商城(全国货到付款 保密配送)';?></title> 
+<meta name="description"  content="<?php echo isset($headTittle)?$headTittle:'成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品。货到付款、全国保密配送.';?>" />
+<title><?php echo isset($headTittle)?$headTittle:'成人用品玩具-男根增大延迟性保健品-夫妻情趣用品-妙处网';?></title> 
 <base href="<?php echo $this->config->skins_url;?>"/>
-<link type="image/x-icon" rel="shortcut icon" href="passport/images/logo02.png"/>
-<?php css('common', 'common', '20160415');?>
+<link type="image/x-icon" rel="shortcut icon" href="passport/images/logo.png"/>
+<?php css('passport', 'bootstrap.min');?>
 <?php css('passport', 'reset', '20160415');?>
 <?php css('passport', 'style', '20160415');?>
 
 <?php js('passport', 'jquery-1.10.2');?>
+<?php js('passport', 'bootstrap.min');?>
 <?php js('passport', 'jquery.validate.min');?>
 <?php js('passport', 'jquery.validate.messages_zh');?>
 <!--[if lt IE 10]>
@@ -25,10 +26,23 @@
 <?php js('passport', 'index', '20160415');?>
 </head>
 <body>
-<div class="black_tp">
-	<div class="w">
-	    <a href="<?php echo $this->config->main_base_url;?>" class="left" target="_blank">
-	     	<img src="passport/images/logo.png" width="130" height="48" />
-	    </a>
+<div class="login-header">
+    <div class="header clearfix">
+        <a href="<?php echo $this->config->main_base_url?>" class="welcome-left">
+          妙处网
+        </a>
+        <span class="welcome-login">
+            <?php 
+                $action = $this->router->fetch_class();
+                echo $action == 'login' ? '欢迎登录' : ( $action == 'register' ? '欢迎注册' : '忘记密码' );
+		    ?>
+		</span>
+		<?php if ($action == 'login' || $action == 'register') :?>
+		<span class="service">24小时客服热线：888-8888-888</span>
+		<?php else :?>
+		<span class="service">
+		    <a href="<?php echo site_url('register')?>">注册</a> <span class="cutoff-line">|</span> <a href="<?php echo site_url('login')?>">登录</a>
+		</span>
+		<?php endif;?>
 	</div>
 </div>

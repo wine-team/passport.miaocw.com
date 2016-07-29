@@ -520,6 +520,18 @@ class MW_Controller extends CI_Controller
         return $imagesName;
     }
     
-    
-    
+    /**
+     * @param unknown $telephone
+     * @param unknown $content
+     * @param number $sms_type 1:56短信；2:第一短信平台;3:
+     */
+    public function sendToSms($telephone, $content, $sms_type=2)
+    {
+    	$this->load->library('sms/sms', NULL, 'sms');
+    	$is_send = $this->sms->sendSms($telephone, $content, $sms_type);
+    	if (!$is_send) { //发送失败，将错误内容保存起来
+    		$this->load->model('ym_sms_error_model', 'ym_sms_error');
+    		$this->ym_sms_error->insertYmSmsError($telephone, $content, $this->sms->getError(), $sms_type);
+    	}
+    }
 }

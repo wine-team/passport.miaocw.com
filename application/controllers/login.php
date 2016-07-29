@@ -3,8 +3,8 @@ class Login extends MW_Controller
 {
     public function _init()
     {
-        $this->load->helper(array('ip'));
-        $this->load->library(array('encrypt', 'sms'));
+        $this->load->helper(array('ip','email'));
+        $this->load->library(array('encrypt', 'sms/sms'));
         $this->load->model('advert_model', 'advert');
         $this->load->model('user_model', 'user');
         $this->load->model('user_log_model','user_log');
@@ -13,7 +13,6 @@ class Login extends MW_Controller
     
     public function index()
     {   
-    	
     	if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
@@ -27,7 +26,10 @@ class Login extends MW_Controller
         } else {
             $data['backurl'] = $this->config->main_base_url;
         }
-        $data['loginBack'] = $this->advert->findBySourceState($source_state=2)->row(0);
+        $data['captcha'] = $this->getCaptcha();
+        $data['err_count'] = get_cookie('err_count');
+        $res = $this->advert->findBySourceState(2)->row_array();
+        $data['login_bg'] = isset($res['picture']) ? $this->config->show_image_url('advert', $res['picture']) : 'passport/images/login-bg.jpg';
         $this->load->view('login/index', $data);
     }
     
@@ -36,39 +38,60 @@ class Login extends MW_Controller
      */
     public function loginPost()
     {
-    	
-    	$postData = $this->input->post();
-        if($this->validateParam($postData['user_name'])){
-        	$this->jsonMessage('请输入用户名');
-        }
-        if($this->validateParam($postData['password'])){
-        	$this->jsonMessage('请输入用户名');
-        }
-        $result = $this->user->login($postData);
-        if( $result->num_rows()<=0 ){
-        	$this->jsonMessage('账号或密码错误');
-        }
-        $user = $result->row(0);
-        if($user->flag==2){
-        	$this->jsonMessage('账号被冻结');
-        }
-        $userInfor = array(
-        	'uid' => $user->uid,
-            'userName' => $postData['user_name']
-        );
-        $expireTime = empty($postData['remember']) ? 7200 : 7200;//是不是永久登陆
-        set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
-        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),$expireTime);
-        $backUrl = empty($postData['back_url']) ? $this->config->main_base_url : $postData['back_url'];
-        $param = array(
-        		   'uid'  => $user->uid,
-        		   'log_time' => date('Y-m-d H:i:s'),
-                   'ip_from'  => getIP(),
-        		   'operate_type'  => 1,
-        		   'status' => 1
-        );
-        $this->user_log->insertUserLog($param);
-        $this->jsonMessage('',$backUrl);
+    	$d = $this->input->post();
+    	//会员登录
+    	if (!empty($d['act']) && $d['act'] == 1) {
+    		$err_count = get_cookie('err_count');
+    		$result = $this->user->login($d);
+    		if ($result->num_rows() <=0) {
+    			set_cookie('err_count', $err_count + 1, 43200);
+    			echo json_encode(array(
+    					'status'  => false,
+    					'messages' => '用户名或密码错误',
+    					'data' => $err_count
+    			));exit;
+    		}
+    		$user = $result->row();
+    		if ($user->flag == 2) {
+    			set_cookie('err_count', $err_count + 1, 43200);
+    			echo json_encode(array(
+    					'status'  => false,
+    					'messages' => '此帐号已被冻结，请与管理员联系',
+    					'data' => $err_count
+    			));exit;
+    		}
+    		//验证码验证
+    		if ($err_count >= 3) {
+    			if (strtoupper($d['captcha']) != strtoupper(get_cookie('captcha'))) {
+    				echo json_encode(array(
+    						'status'  => false,
+    						'messages' => '验证码不正确',
+    						'input' => 'captcha'
+    				));exit;
+    			}
+    		}
+    		delete_cookie('err_count');
+    		//快捷登录
+    	}else{
+    		$user = $this->user->quick_login($d);
+    	}
+    	$userInfor = array(
+    			'uid' => $user->uid,
+    			'userName' => $user->alias_name
+    	);
+    	$expireTime = empty($d['auto_login']) ? 7200 : 7200;//是不是永久登陆
+    	set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
+    	$this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),$expireTime);
+    	$backUrl = empty($d['backurl']) ? $this->config->main_base_url : $d['backurl'];
+    	$param = array(
+    			'uid'  => $user->uid,
+    			'log_time' => date('Y-m-d H:i:s'),
+    			'ip_from'  => getIP(),
+    			'operate_type'  => 1,
+    			'status' => 1
+    	);
+    	$this->user_log->insertUserLog($param);
+    	$this->jsonMessage('',$backUrl);
     }
     
      /**
