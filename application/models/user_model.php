@@ -37,7 +37,7 @@ class User_model extends CI_Model
     	->where(array('phone' => $data['mobile_phone']))
     	->get($this->table)
     	->row(0);
-    	$_res = $this->db->select('id')
+    	$_res = $this->db->select('id,addtime,failtime')
     	->where(array('username' => $data['mobile_phone'], 'code' => md5($data['verify'])))
     	->get($this->table_2)
     	->row_array(0);
@@ -47,7 +47,7 @@ class User_model extends CI_Model
     				'messages' => '手机号码有误或者动态密码无效'
     		));exit;
     	}
-    	if ((time()>=strtotime($_res->addtime)) && (time()<=strtotime($_res->failtime)) ){
+    	if ( !((time()>=strtotime($_res['addtime'])) && (time()<=strtotime($_res['failtime']))) ){
     		echo json_encode(array(
     				'status'  => false,
     				'messages' => '动态密码失效，请重新获取'
