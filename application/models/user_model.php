@@ -47,6 +47,12 @@ class User_model extends CI_Model
     				'messages' => '手机号码有误或者动态密码无效'
     		));exit;
     	}
+    	if ((time()>=strtotime($_res->addtime)) && (time()<=strtotime($_res->failtime)) ){
+    		echo json_encode(array(
+    				'status'  => false,
+    				'messages' => '动态密码失效，请重新获取'
+    		));exit;
+    	}
     	if($res->flag == 2) {
     		echo json_encode(array(
     				'status'  => false,

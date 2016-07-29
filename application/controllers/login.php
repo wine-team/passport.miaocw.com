@@ -41,6 +41,12 @@ class Login extends MW_Controller
     	$d = $this->input->post();
     	//会员登录
     	if (!empty($d['act']) && $d['act'] == 1) {
+    		if ($this->validateParam($d['username'])) {
+    			$this->jsonMessage('请输入用户名');
+    		}
+    		if ($this->validateParam($d['password'])) {
+    			$this->jsonMessage('请输入密码');
+    		}
     		$err_count = get_cookie('err_count');
     		$result = $this->user->login($d);
     		if ($result->num_rows() <=0) {
@@ -73,6 +79,12 @@ class Login extends MW_Controller
     		delete_cookie('err_count');
     		//快捷登录
     	}else{
+	    	if($this->validateParam($d['mobile_phone'])){
+	        	$this->jsonMessage('请输入电话号码');
+	        }
+    		if (strtoupper($d['captcha']) != strtoupper(get_cookie('captcha'))) {
+    			$this->jsonMessage('验证码不正确');
+    		}
     		$user = $this->user->quick_login($d);
     	}
     	$userInfor = array(
