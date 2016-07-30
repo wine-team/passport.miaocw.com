@@ -19,7 +19,7 @@ class Forget extends MW_Controller
 		}
 		$captcha = $this->getCaptcha(18, 130, 36);
 		$data['captcha'] = $captcha;
-		$this->load->view('pc/forget/index', $data);
+		$this->load->view('forget/index', $data);
 	}
 	
 	 /**
@@ -48,8 +48,7 @@ class Forget extends MW_Controller
 			$this->jsonMessage('用户名不存在');
 		}
 		$encodename = $this->encrypt->encode($username);
-	
-		$this->jsonMessage('', base_url('pc/forget/confirm').'?keycode='.urlencode($encodename));
+		$this->jsonMessage('', base_url('forget/confirm').'?keycode='.urlencode($encodename));
 	}
 	
 	/**
@@ -69,12 +68,12 @@ class Forget extends MW_Controller
 		if (valid_mobile($username)) {
 			$mobilePhone = $username;
 		} else {
-			$mobilePhone = $user->mobile_phone;
+			$mobilePhone = $user->phone;
 		}
-		$data['user_name'] = $user->user_name;
+		$data['user_name'] = empty($user->phone) ? $user->email : $user->phone;
 		$data['encode_phone'] = $this->encrypt->encode($mobilePhone);
 		$data['mobile_phone'] = substr_replace($mobilePhone, '****', 3, 4);
-		$this->load->view('pc/forget/confirm', $data);
+		$this->load->view('forget/confirm', $data);
 	}
 	
 	//发送短信
@@ -120,7 +119,7 @@ class Forget extends MW_Controller
 		}
 		$encodename = $this->encrypt->encode($this->input->post('username'));
 	
-		$this->jsonMessage('', base_url('pc/forget/modify').'?keycode='.urlencode($encodename));
+		$this->jsonMessage('', base_url('forget/modify').'?keycode='.urlencode($encodename));
 	}
 	
 	/**
@@ -137,7 +136,7 @@ class Forget extends MW_Controller
 			$this->alertJumpPre('帐号有误，请联系客服解决问题');
 		}
 		$data['user'] = $result->row();
-		$this->load->view('pc/forget/modify', $data);
+		$this->load->view('forget/modify', $data);
 	}
 	
 	/**
@@ -156,8 +155,7 @@ class Forget extends MW_Controller
 		if (!$modify) {
 			$this->jsonMessage('服务器忙，请稍候再试');
 		}
-	
-		$this->jsonMessage('', base_url('pc/forget/success'));
+		$this->jsonMessage('', base_url('forget/setSuccess'));
 	}
 	
 	/**
@@ -168,6 +166,6 @@ class Forget extends MW_Controller
 		if ($this->frontUser) { //如果已经登录，就跳转到首页。
 			$this->redirect($this->config->main_base_url);
 		}
-		$this->load->view('pc/forget/success');
+		$this->load->view('forget/success');
 	}
 }

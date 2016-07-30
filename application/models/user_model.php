@@ -75,7 +75,8 @@ class User_model extends CI_Model
      */
     public function validateName($userName)
     {
-    	$this->db->where('user_name', $userName);
+    	$userName = trim(addslashes($userName));
+    	$this->db->where("(`phone`='{$userName}' OR `email`='{$userName}')");
     	return $this->db->get($this->table);
     }
     
@@ -134,10 +135,11 @@ class User_model extends CI_Model
     
     public function modifyPassword($postData=array())
     {
+    	$userName = trim(addslashes($postData['username']));
     	$data = array(
-    			'pw' => md5($postData['password']),
+    			'password' => sha1(base64_encode($postData['password'])),
     	);
-    	$this->db->where('user_name', $postData['username']);
+    	$this->db->where("(`phone`='{$userName}' OR `email`='{$userName}')");
     	return $this->db->update($this->table, $data);
     }
     
