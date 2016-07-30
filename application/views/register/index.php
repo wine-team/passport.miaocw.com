@@ -14,9 +14,7 @@
                         <tr>
                             <td class="apartfrom-cellular">手机号码：</td>
                             <td class="apartfrom-position-hao clearfix">
-                                <?php if ($this->input->get('backurl')) :?>
                                 <input type="hidden" name="backurl" value="<?php echo $this->input->get('backurl');?>">
-                                <?php endif;?>
                                	<input type="text" name="mobile_phone" class="required" placeholder="请输入您的手机号" autocomplete="off"/>
                                 <i class="iconfont">&#xe605;</i>
                             </td>

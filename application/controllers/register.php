@@ -29,7 +29,7 @@ class Register extends MW_Controller
         	if (isset($parseUrl['query']) && strpos($parseUrl['query'], 'backurl') !== false) {
         		$data['backurl'] = urldecode(strstr($parseUrl['query'], 'http'));
         	} else {
-        		$data['backurl'] = $_SERVER['HTTP_REFERER'];
+        		$data['backurl'] = $this->input->get('backurl') ? $this->input->get('backurl') : $_SERVER['HTTP_REFERER'];
         	}
         } else {
         	$data['backurl'] = $this->config->main_base_url;
