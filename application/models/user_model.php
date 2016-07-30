@@ -11,7 +11,7 @@ class User_model extends CI_Model
     {
         $username = trim(addslashes($postData['username']));
         $this->db->where("(`phone`='{$username}' OR `email`='{$username}')");
-        $this->db->where('password', sha1(base64_encode((trim($postData['password'])))));
+        $this->db->where('password', sha1(base64_encode(($postData['password']))));
         return $this->db->get($this->table);
     }
     
@@ -86,7 +86,7 @@ class User_model extends CI_Model
      */
     public function validateMobilePhone($mobilePhone)
     {
-    	$this->db->where('mobile_phone', $mobilePhone);
+    	$this->db->where('phone', $mobilePhone);
     	return $this->db->get($this->table);
     }
     
@@ -95,39 +95,24 @@ class User_model extends CI_Model
      * @param unknown $postData
      * @param string $parent_id
      */
-    public function insertUser($postData=array(), $parent_id=UTID_BEIZHU)
+    public function insertUser($postData=array(), $parent_id=0)
     {
     	$data = array(
-    			'user_name'      => $postData['username'],
-    			'alias_name'     => $postData['username'],
-    			'mobile_phone'   => $postData['mobile_phone'],
-    			'user_type'      => UTID_CUSTOMER,
+    			'alias_name'     => $postData['mobile_phone'],
+    			'phone'     	 => $postData['mobile_phone'],
+    			'password'   	 => sha1(base64_encode($postData['password'])),
+    			'sex'			 => 1,
+    			'birthday'		 => date('Y-m-d H:i:s'),
+    			'user_money'     => 0,
+    			'frozen_money'   => 0,
+    			'pay_points'     => 0,
+    			'flag'           => 1,
+    			'sms'            => 1,
     			'parent_id'      => $parent_id,
-    			'owner_id'       => $parent_id,
-    			'pw'             => md5($postData['password']),
-    			'sms'            => 0,
-    			'login_count'    => 1,
+    			'created_at'     => date('Y-m-d H:i:s')
     	);
-    	if (!empty($postData['alias_name'])) {
-    		$data['alias_name'] = $postData['alias_name'];
-    	}
-    	if (!empty($postData['user_type'])) {
-    		$data['user_type'] = $postData['user_type'];
-    	}
-    	if (!empty($postData['owner_id'])) {
-    		$data['owner_id'] = $postData['owner_id'];
-    	}
-    	if (!empty($postData['personal_photo'])) {
-    		$data['personal_photo'] = $postData['personal_photo'];
-    	}
-    	if (isset($postData['extra'])) {
-    		$data['extra'] = $postData['extra'];
-    	}
-    	if (isset($postData['sms'])) {
-    		$data['sms'] = $postData['sms'];
-    	}
-    	if (isset($postData['key'])) {
-    		$data['key'] = $postData['key'];
+    	if (!empty($postData['email'])) {
+    		$data['email'] = $postData['email'];
     	}
     	$this->db->insert($this->table, $data);
     	return $this->db->insert_id();

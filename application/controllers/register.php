@@ -3,9 +3,10 @@ class Register extends MW_Controller
 {
     public function _init()
     {
-        $this->load->helper(array('email'));
+        $this->load->helper(array('ip','email'));
         $this->load->library(array('encrypt'));
         $this->load->model('user_model', 'user');
+        $this->load->model('user_log_model','user_log');
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
     }
     
@@ -17,7 +18,24 @@ class Register extends MW_Controller
         if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
-        $this->load->view('login/index',$data);
+        $username = $this->input->get('username');
+        if (!empty($username)) {
+        	$data['parent_id'] = $username;
+        } else {
+        	$data['parent_id'] = get_cookie('user_name');
+        }
+        if (isset($_SERVER['HTTP_REFERER'])) {
+        	$parseUrl = parse_url($_SERVER['HTTP_REFERER']);
+        	if (isset($parseUrl['query']) && strpos($parseUrl['query'], 'backurl') !== false) {
+        		$data['backurl'] = urldecode(strstr($parseUrl['query'], 'http'));
+        	} else {
+        		$data['backurl'] = $_SERVER['HTTP_REFERER'];
+        	}
+        } else {
+        	$data['backurl'] = $this->config->main_base_url;
+        }
+        $data['captcha'] = $this->getCaptcha();
+        $this->load->view('register/index',$data);
     }
     
     /**
@@ -25,25 +43,16 @@ class Register extends MW_Controller
      */
     public function doRegister()
     {
-        $username = $this->input->post('username');
-        $type = $this->input->post('type');  //1手机注册  2邮箱注册
-        $type = ( ($type==1)||($type==2) ) ? $type : '1' ;//以防别人修改type值
-        if ($this->validateParam($username)){
-        	$this->jsonMessage('请输入用户名');
+    	$username = $this->input->post('mobile_phone');
+        if (empty($username)) {
+        	$this->jsonMessage('请输入手机号码');
         }
         if (strlen($this->input->post('password'))<6 || strlen($this->input->post('confirm_password'))<6){
         	$this->jsonMessage('密码长度不小于6位');
         }
-        if ($type == 1){
-	        if (!valid_mobile($username) ) {
-	            $this->jsonMessage('手机号码格式有误');
-	        }
-    	}
-    	if ($type == 2){
-    		if (!valid_email($username)){
-    			$this->jsonMessage('邮箱格式有误');
-    		}
-    	}
+        if (!valid_mobile($username) ) {
+            $this->jsonMessage('手机号码格式有误');
+        }
         if ($this->input->post('password') != $this->input->post('confirm_password')) {
             $this->jsonMessage('密码输入不一致');
         }
@@ -61,12 +70,18 @@ class Register extends MW_Controller
         		'uid' => $userId,
         		'userName' => $username
         );
-        set_cookie('frontUser', serialize($userInfor), 43250);
-        $backurl = $this->input->post('back_url') ? urldecode($this->input->post('back_url')) : $this->config->ucenter_url;
-        echo json_encode(array(
-            'status'   => true,
-            'messages' => $backurl,
-        ));exit;
+        set_cookie('frontUser',base64_encode(serialize($userInfor)),7200);
+        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),7200);
+        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->ucenter_url;
+        $param = array(
+        		'uid'  =>  $userId,
+        		'log_time' => date('Y-m-d H:i:s'),
+        		'ip_from'  => getIP(),
+        		'operate_type'  => 1,
+        		'status' => 1
+        );
+        $this->user_log->insertUserLog($param);
+        $this->jsonMessage('',$backurl);
     }
     
     /**
