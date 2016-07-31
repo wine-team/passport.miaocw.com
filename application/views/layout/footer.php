@@ -22,13 +22,5 @@
 	</ul>
 	</div>
 </div>
-<script>
-	$(document).ready(function(){
- 		$('.login').on('click','.hd',function(){
-            $('.normal-login').toggle();
-			$('.quick-login').toggle();
-		});
-	});
-</script>
 </body>
 </html>
