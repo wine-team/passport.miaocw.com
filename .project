@@ -17,10 +17,7 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-<<<<<<< HEAD
-=======
-		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
->>>>>>> 45bcd9bd2cedc2c9890208b71bf781dc17b6a3bd
+
 		<nature>org.eclipse.php.core.PHPNature</nature>
 	</natures>
 </projectDescription>
