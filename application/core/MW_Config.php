@@ -53,13 +53,13 @@ class MW_Config extends CI_Config
      * $dirname 文件夹名称
      * $imageName 图片名称
      */
-    public function show_image_thumb_url($dirname, $imageName = '')
+    public function show_image_thumb_url($dirname, $imageName = '',$resize='360')
     {
-        if (!empty($imageName)) {
-            $imageName = $this->get_thumb_image_name($imageName);
-            return $this->images_url.$dirname.'/'.$imageName;
-        }
-        return $this->images_url.$dirname.'/';
+    	if (!empty($imageName)) {
+    		$imageName = $this->get_thumb_image_name($imageName,$resize);
+    		return $this->images_url.$dirname.'/'.$imageName;
+    	}
+    	return $this->images_url.$dirname.'/';
     }
     
     /**
@@ -67,17 +67,16 @@ class MW_Config extends CI_Config
      * @param unknown $imageName
      * @return unknown|string
      */
-    private function get_thumb_image_name($imageName)
+    private function get_thumb_image_name($imageName,$resize)
     {
-        if (strpos($imageName, '/') === false) {
-            return $imageName;
-        }
-        $imageNamePath = explode('/', $imageName, 2);
-        $oldDirData  = $imageNamePath[0];
-        $oldFileData = $imageNamePath[1];
-        $imageName = $oldDirData.'/thumb/'.$oldFileData;
-        
-        return $imageName;
+    	if (strpos($imageName, '/') === false) {
+    		return $imageName;
+    	}
+    	$imageNamePath = explode('/', $imageName, 2);
+    	$oldDirData  = $imageNamePath[0];
+    	$oldFileData = explode('.',$imageNamePath[1]);
+    	$imageName = $oldDirData.'/thumb/'.$oldFileData[0].'_'.$resize.'x'.$resize.'.'.$oldFileData[1];
+    	return $imageName;
     }
     
 }
