@@ -1,6 +1,6 @@
 <?php $this->load->view('layout/header');?>
 <div class="bz-login">
-	<div class="login-img">
+    <div class="login-img">
        <img src="<?php echo $login_bg?>"/>
 	</div>
 	<div class="login-con">
