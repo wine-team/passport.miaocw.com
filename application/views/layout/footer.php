@@ -15,7 +15,6 @@
 		<ul class="clearfix">
 			<li><a href="javascript:void(0)">Copyright©www.miaocw.com</a></li>
 			<li><a href="javascript:void(0)">浙ICP备11029814号-2</a></li>
-			<li><a href="javascript:void(0)">经营许可证编号：浙B2-20130074</a></li>
 		</ul>
 	</div>
 </div>
