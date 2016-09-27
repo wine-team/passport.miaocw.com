@@ -109,6 +109,7 @@ class User_model extends CI_Model
     			'flag'           => 1,
     			'sms'            => 1,
     			'parent_id'      => $parent_id,
+    			'photo'          => rand(0,9).'.jpg',
     			'created_at'     => date('Y-m-d H:i:s')
     	);
     	if (!empty($postData['email'])) {
