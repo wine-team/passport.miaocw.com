@@ -122,11 +122,13 @@ class Register extends MW_Controller
     			'status'        => 1,
     			'created_at'    => date('Y-m-d H:i:s'),
     	);
+    	
     	$status = $this->user_coupon_get->insert($param);
     	if ($status) {
-    		$res = $this->user_coupon_set->setCouponNum($coupon_set_id,$num=1);
+    		
+    		 $res = $this->user_coupon_set->setCouponNum($coupon_set_id,$num=1);
     	}
-    	return $status&&$res;
+    	return $status;
     }
     
     /**
