@@ -8,6 +8,8 @@ class Register extends MW_Controller
         $this->load->model('user_model', 'user');
         $this->load->model('user_log_model','user_log');
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
+        $this->load->model('User_coupon_set_model','user_coupon_set');
+        $this->load->model('User_coupon_get_model','user_coupon_get');
     }
     
      /**
@@ -43,7 +45,7 @@ class Register extends MW_Controller
      */
     public function doRegister()
     {
-    	$username = $this->input->post('mobile_phone');
+    	$username = $this->input->post('mobile_phone',true);
         if (empty($username)) {
         	$this->jsonMessage('请输入手机号码');
         }
@@ -60,8 +62,19 @@ class Register extends MW_Controller
         if ($result->num_rows() > 0) {
             $this->jsonMessage('该用户名已经存在');
         }
+        if ($this->input->post('parent_id')) {
+        	$parent = $this->user->validateName($this->input->post('parent_id'));
+        	if ($parent->num_rows() > 0) {
+        		$parent_id = $parent->row(0)->uid;
+        	} else {
+        		$this->jsonMessage('推荐人不存在');
+        	}
+        } else {
+        	$parent_id = 1;// 妙处网总部
+        }
         $this->db->trans_start();
-        $userId = $this->user->insertUser($this->input->post());
+        $userId = $this->user->insertUser($this->input->post(),$parent_id);
+        $getCoupon = $this->getCoupon($coupon_set_id=1,$userId);
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             $this->jsonMessage('服务器忙，请稍候再试');
@@ -82,6 +95,38 @@ class Register extends MW_Controller
         );
         $this->user_log->insertUserLog($param);
         $this->jsonMessage('',$backurl);
+    }
+    
+     /**
+     * 获取优惠劵
+     * @param unknown $coupon_set_id
+     */
+    private function getCoupon($coupon_set_id,$uid) {
+    	
+    	$couponRes = $this->user_coupon_set->findById($coupon_set_id);
+    	if ($couponRes->num_rows()<=0) {
+    		return false;
+    	}
+    	$couponSet = $couponRes->row(0);
+    	$param = array(
+    			'coupon_set_id' => $couponSet->coupon_set_id,
+    			'coupon_name'   => $couponSet->coupon_name,
+    			'uid'           => $uid,
+    			'scope'         => $couponSet->scope,
+    			'related_id'    => $couponSet->related_id,
+    			'amount'        => $couponSet->amount,
+    			'condition'     => $couponSet->condition,
+    			'note'          => $couponSet->note,
+    			'start_time'    => $couponSet->start_time,
+    			'end_time'      => $couponSet->end_time,
+    			'status'        => 1,
+    			'created_at'    => date('Y-m-d H:i:s'),
+    	);
+    	$status = $this->user_coupon_get->insert($param);
+    	if ($status) {
+    		$res = $this->user_coupon_set->setCouponNum($coupon_set_id,$num=1);
+    	}
+    	return $status&&$res;
     }
     
     /**
