@@ -1,13 +1,20 @@
 <?php
 class MW_Config extends CI_Config 
 {
-	public $main_base_url  =  'http://miaow.localhost/';
-	public $images_url     =  'http://images.localhost/';
-	public $skins_url      =  'http://skins.localhost/';
-	public $passport_url   =  'http://passport.localhost/';
-	public $help_url       =  'http://help.localhost/';
-	public $ucenter_url    =  'http://ucenter.localhost/';
-    
+//    public $main_base_url  =  'http://miaow.localhost/';
+//    public $images_url     =  'http://images.localhost/';
+//    public $skins_url      =  'http://skins.localhost/';
+//    public $passport_url   =  'http://passport.localhost/';
+//    public $help_url       =  'http://help.localhost/';
+//    public $ucenter_url    =  'http://ucenter.localhost/';
+
+    public $main_base_url  =  'http://www.miaow.com/';
+    public $images_url     =  'http://images.miaow.com/';
+    public $skins_url      =  'http://skins.miaow.com/';
+    public $passport_url   =  'http://passport.miaow.com/';
+    public $help_url       =  'http://help.miaow.com/';
+    public $ucenter_url    =  'http://ucenter.miaow.com/';
+
      /**
      * 图片上传路径
      * $dirname 文件夹名称
@@ -53,13 +60,13 @@ class MW_Config extends CI_Config
      * $dirname 文件夹名称
      * $imageName 图片名称
      */
-    public function show_image_thumb_url($dirname, $imageName = '',$resize='360')
+    public function show_image_thumb_url($dirname, $imageName = '', $resize = '360')
     {
-    	if (!empty($imageName)) {
-    		$imageName = $this->get_thumb_image_name($imageName,$resize);
-    		return $this->images_url.$dirname.'/'.$imageName;
-    	}
-    	return $this->images_url.$dirname.'/';
+        if (!empty($imageName)) {
+            $imageName = $this->get_thumb_image_name($imageName, $resize);
+            return $this->images_url.$dirname.'/'.$imageName;
+        }
+        return $this->images_url.$dirname.'/';
     }
     
     /**
@@ -67,16 +74,15 @@ class MW_Config extends CI_Config
      * @param unknown $imageName
      * @return unknown|string
      */
-    private function get_thumb_image_name($imageName,$resize)
+    private function get_thumb_image_name($imageName, $resize)
     {
-    	if (strpos($imageName, '/') === false) {
-    		return $imageName;
-    	}
-    	$imageNamePath = explode('/', $imageName, 2);
-    	$oldDirData  = $imageNamePath[0];
-    	$oldFileData = explode('.',$imageNamePath[1]);
-    	$imageName = $oldDirData.'/thumb/'.$oldFileData[0].'_'.$resize.'x'.$resize.'.'.$oldFileData[1];
-    	return $imageName;
+        if (strpos($imageName, '/') === false) {
+            return $imageName;
+        }
+        $imageNamePath = explode('/', $imageName, 2);
+        $oldDirData  = $imageNamePath[0];
+        $oldFileData = explode('.',$imageNamePath[1]);
+        $imageName = $oldDirData.'/thumb/'.$oldFileData[0].'_'.$resize.'x'.$resize.'.'.$oldFileData[1];
+        return $imageName;
     }
-    
 }
