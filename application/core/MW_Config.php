@@ -8,12 +8,12 @@ class MW_Config extends CI_Config
 //    public $help_url       =  'http://help.localhost/';
 //    public $ucenter_url    =  'http://ucenter.localhost/';
 
-    public $main_base_url  =  'http://www.miaow.com/';
-    public $images_url     =  'http://images.miaow.com/';
-    public $skins_url      =  'http://skins.miaow.com/';
-    public $passport_url   =  'http://passport.miaow.com/';
-    public $help_url       =  'http://help.miaow.com/';
-    public $ucenter_url    =  'http://ucenter.miaow.com/';
+    public $main_base_url  =  'http://www.miaocw.com/';
+    public $images_url     =  'http://images.miaocw.com/';
+    public $skins_url      =  'http://skins.miaocw.com/';
+    public $passport_url   =  'http://passport.miaocw.com/';
+    public $help_url       =  'http://help.miaocw.com/';
+    public $ucenter_url    =  'http://ucenter.miaocw.com/';
 
      /**
      * 图片上传路径
