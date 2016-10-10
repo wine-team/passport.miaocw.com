@@ -41,7 +41,7 @@
                         <label class="add-label">手机号：</label>
                         <div class="input-li">
                             <input type="hidden" name="username" value="<?php echo $user_name?>">
-                            <input type="text" name="mobile_phone" value="<?php echo $mobile_phone;?>" class="add-control input-li" readonly="readonly">
+                            <input type="text" name="phone" value="<?php echo $phone;?>" class="add-control input-li" readonly="readonly">
                         </div>
                         <button type="button" class="btn btn-success btnsend" data-attr="<?php echo $encode_phone;?>">发送验证码</button>
                     </div>

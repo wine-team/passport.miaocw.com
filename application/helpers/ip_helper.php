@@ -16,8 +16,8 @@ function getIP()
     else if (@getenv("REMOTE_ADDR"))
         $ip = getenv("REMOTE_ADDR");
     else
-        $ip = "122.234.148.84";//贝竹电子商务,默认IP;
-    $ip = strpos($ip,'27.0.0.1') ? '122.234.148.84' : $ip;
+        $ip = '120.76.250.144';//贝竹电子商务,默认IP;
+    $ip = strpos($ip,'27.0.0.1') ? '120.76.250.144' : $ip;
     return $ip;
 }
 /**
@@ -25,20 +25,25 @@ function getIP()
  * @param string $ip
  * @return boolean|Ambigous <mixed, Ambigous, unknown, string>
  */
-function getIpLookup($ip = ''){
-    if(empty($ip)){
+function getIpLookup($ip = '')
+{
+    if (empty($ip)) {
         $ip = getIp();
     }
     $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip='.$ip); // 新浪微博api
-    if(empty($res)){ return false; }
+    if (empty($res)) {
+        return false;
+    }
     $jsonMatches = array();
     preg_match('#\{.+?\}#', $res, $jsonMatches);
-    if(!isset($jsonMatches[0])){ return false; }
+    if (!isset($jsonMatches[0])) {
+        return false;
+    }
     $json = json_decode($jsonMatches[0], true);
-    if(isset($json['ret']) && $json['ret'] == 1){
+    if (isset($json['ret']) && $json['ret'] == 1) {
         $json['ip'] = $ip;
         unset($json['ret']);
-    }else{
+    } else {
         return false;
     }
     return $json;
