@@ -74,7 +74,7 @@ class MW_Config extends CI_Config
         }
         $imageNamePath = explode('/', $imageName, 2);
         $oldDirData  = $imageNamePath[0];
-        $oldFileData = explode('.',$imageNamePath[1]);
+        $oldFileData = explode('.', $imageNamePath[1]);
         $imageName = $oldDirData.'/thumb/'.$oldFileData[0].'_'.$resize.'x'.$resize.'.'.$oldFileData[1];
         return $imageName;
     }
