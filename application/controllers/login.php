@@ -172,7 +172,7 @@ class Login extends MW_Controller
         }
         $code = mt_rand(1000, 9999);
         $this->db->trans_start();
-        $result = $this->getpwd_phone->validateName(array('phone'=>$phone));
+        $result = $this->getpwd_phone->validatePhone(array('phone'=>$phone));
         if ($result->num_rows() > 0) {
             $result1 = $this->getpwd_phone->update(array('phone'=>$phone, 'code'=>$code));
         } else {

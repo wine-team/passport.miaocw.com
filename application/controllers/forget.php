@@ -85,7 +85,7 @@ class Forget extends MW_Controller
         }
         $code = mt_rand(1000, 9999);
         $this->db->trans_start();
-        $result = $this->getpwd_phone->validateName(array('phone'=>$phone));
+        $result = $this->getpwd_phone->validatePhone(array('phone'=>$phone));
         if ($result->num_rows() > 0) {
             $this->getpwd_phone->update(array('phone'=>$phone, 'code'=>$code));
         } else {
@@ -110,10 +110,10 @@ class Forget extends MW_Controller
             $this->jsonMessage('手机号码有误');
         }
         $validate = array(
-                'phone'  => $phone,
-                'verify' => $this->input->post('verify')
+            'phone'  => $phone,
+            'verify' => $this->input->post('verify')
         );
-        $verify = $this->getpwd_phone->validateName($validate, true);
+        $verify = $this->getpwd_phone->validatePhone($validate, true);
         if ($verify->num_rows() <= 0) { //验证码无效
             $this->jsonMessage('验证码无效');
         }
