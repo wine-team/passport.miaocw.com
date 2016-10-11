@@ -2,13 +2,8 @@
 class Getpwd_phone_model extends CI_Model
 {
     private $table = 'getpwd_phone';
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->database();
-    }
     
-    public function insertGetpwdPhone($postData=array())
+    public function insert($postData=array())
     {
         $data = array(
             'username' => $postData['phone'],
@@ -35,7 +30,7 @@ class Getpwd_phone_model extends CI_Model
         return $this->db->get($this->table);
     }
     
-    public function updateGetpwdPhone($postData=array())
+    public function update($postData=array())
     {
         $data = array(
             'code'     => md5($postData['code']),

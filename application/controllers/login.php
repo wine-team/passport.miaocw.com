@@ -96,18 +96,50 @@ class Login extends MW_Controller
             'userPhoto' => $user->photo,
         );
         $expireTime = empty($d['auto_login']) ? 7200 : 7200;//是不是永久登陆
-        set_cookie('frontUser',base64_encode(serialize($userInfor)),$expireTime);
-        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),$expireTime);
+        set_cookie('frontUser',base64_encode(serialize($userInfor)), $expireTime);
+        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), $expireTime);
         $backUrl = empty($d['backurl']) ? $this->config->main_base_url : $d['backurl'];
-        $param = array(
+        $params = array(
             'uid'          => $user->uid,
             'log_time'     => date('Y-m-d H:i:s'),
             'ip_from'      => getIP(),
             'operate_type' => 1,
             'status'       => 1
         );
-        $this->user_log->insertUserLog($param);
+        $this->user_log->insert($params);
         $this->jsonMessage('', $backUrl);
+    }
+
+    /**
+     * 快速登录验证
+     */
+    public function quick_login($data=array())
+    {
+        if (empty($data['phone'])) {
+            $this->jsonMessage('请输入手机号码');
+        }
+        if (empty($data['verify'])) {
+            $this->jsonMessage('请输入动态密码');
+        }
+        $result = $this->user->validatePhone($data['phone']);
+        if ($result->num_rows() <= 0) {
+            $this->jsonMessage('手机号码有误');
+        }
+        $res = $result->row(0);
+
+        $result1 = $this->getpwd_phone->validatePhone(array('username' => $data['phone'], 'code' => md5($data['verify'])), 'id, addtime, failtime');
+        if ($result1->num_rows() <= 0) {
+            $this->jsonMessage('动态密码无效');
+        }
+        $_res = $result1->row_array();
+
+        if (!((time()>=strtotime($_res['addtime'])) && (time()<=strtotime($_res['failtime'])))) {
+            $this->jsonMessage('动态密码失效，请重新获取');
+        }
+        if ($res->flag == 2) {
+            $this->jsonMessage('此帐号已被冻结，请与管理员联系');
+        }
+        return $res;
     }
     
      /**
@@ -142,9 +174,9 @@ class Login extends MW_Controller
         $this->db->trans_start();
         $result = $this->getpwd_phone->validateName(array('phone'=>$phone));
         if ($result->num_rows() > 0) {
-            $result1 = $this->getpwd_phone->updateGetpwdPhone(array('phone'=>$phone, 'code'=>$code));
+            $result1 = $this->getpwd_phone->update(array('phone'=>$phone, 'code'=>$code));
         } else {
-            $result1 = $this->getpwd_phone->insertGetpwdPhone(array('phone'=>$phone, 'code'=>$code));
+            $result1 = $this->getpwd_phone->insert(array('phone'=>$phone, 'code'=>$code));
         }
         $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'正在使用验证码登录会员，验证码为:'.$code.'，有效期为10分钟，请勿向他人泄漏。');
         $this->db->trans_complete();

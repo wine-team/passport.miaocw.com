@@ -87,9 +87,9 @@ class Forget extends MW_Controller
         $this->db->trans_start();
         $result = $this->getpwd_phone->validateName(array('phone'=>$phone));
         if ($result->num_rows() > 0) {
-            $this->getpwd_phone->updateGetpwdPhone(array('phone'=>$phone, 'code'=>$code));
+            $this->getpwd_phone->update(array('phone'=>$phone, 'code'=>$code));
         } else {
-            $this->getpwd_phone->insertGetpwdPhone(array('phone'=>$phone, 'code'=>$code));
+            $this->getpwd_phone->insert(array('phone'=>$phone, 'code'=>$code));
         }
         $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'找回密码操作，验证码为:'.$code.'，为了你的账户安全，请不要将验证码泄露给任何人。有效期为10分钟。');
         $this->db->trans_complete();

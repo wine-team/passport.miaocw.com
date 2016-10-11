@@ -2,7 +2,6 @@
 class User_model extends CI_Model
 {
     private $table = 'user';
-    private $table_2 = 'getpwd_phone';
 
     public function findByUid($uid)
     {
@@ -14,66 +13,18 @@ class User_model extends CI_Model
      * 登陆获取
      * @param unknown $postData
      */
-    public function login($postData)
+    public function login($params=array())
     {
-        $username = trim(addslashes($postData['username']));
-        $this->db->where("(`phone`='{$username}' OR `email`='{$username}')");
-        $this->db->where('password', sha1(base64_encode(($postData['password']))));
+        $userName = trim(addslashes($params['username']));
+        if (valid_mobile($userName)) {
+            $this->db->where('phone', $userName);
+        } else {
+            $this->db->where('email', $userName);
+        }
+        //$this->db->where("(`phone`='{$userName}' OR `email`='{$userName}')");
+        $this->db->where('password', sha1(base64_encode(($params['password']))));
+        $this->db->limit(1);
         return $this->db->get($this->table);
-    }
-    
-    /**
-     * 快速登录验证
-     * cyl
-     */
-    public function quick_login($data=array())
-    {
-         if (empty($data['phone'])) {
-            echo json_encode(array(
-                'status'  => false,
-                'messages' => '请输入手机号码'
-            ));exit;
-        }
-        if (empty($data['verify'])) {
-            echo json_encode(array(
-                'status'  => false,
-                'messages' => '请输入动态密码'
-            ));exit;
-        }
-        $res = $this->db->select(array('uid', 'alias_name','flag'))
-                ->where(array('phone' => $data['phone']))
-        		->get($this->table)
-        		->row(0);
-        $_res = $this->db->select('id, addtime, failtime')
-        		->where(array('username' => $data['phone'], 'code' => md5($data['verify'])))
-        		->get($this->table_2)
-        		->row_array(0);
-        if (!$res || !$_res) {
-            echo json_encode(array(
-                'status'  => false,
-                'messages' => '手机号码有误或者动态密码无效'
-            ));exit;
-        }
-        if ( !((time()>=strtotime($_res['addtime'])) && (time()<=strtotime($_res['failtime']))) ){
-            echo json_encode(array(
-                'status'  => false,
-                'messages' => '动态密码失效，请重新获取'
-            ));exit;
-        }
-        if($res->flag == 2) {
-            echo json_encode(array(
-                'status'  => false,
-                'messages' => '此帐号已被冻结，请与管理员联系'
-            ));exit;
-        }
-        return $res;
-    }
-    
-    public  function visitCount($uid)
-    {
-        $this->db->set('login_count', 'login_count+1', false);
-        $this->db->where('uid', $uid);
-        return $this->db->update($this->table);
     }
     
     /**
@@ -83,7 +34,11 @@ class User_model extends CI_Model
     public function validateName($userName)
     {
         $userName = trim(addslashes($userName));
-        $this->db->where("(`phone`='{$userName}' OR `email`='{$userName}')");
+        if (valid_mobile($userName)) {
+            $this->db->where('phone', $userName);
+        } else {
+            $this->db->where('email', $userName);
+        }
         return $this->db->get($this->table);
     }
     
@@ -102,7 +57,7 @@ class User_model extends CI_Model
      * @param unknown $postData
      * @param string $parent_id
      */
-    public function insertUser($postData=array(), $parent_id=0)
+    public function insert($postData=array(), $parent_id=0)
     {
         $data = array(
             'alias_name'     => $postData['phone'],
@@ -132,7 +87,11 @@ class User_model extends CI_Model
         $data = array(
             'password' => sha1(base64_encode($postData['password'])),
         );
-        $this->db->where("(`phone`='{$userName}' OR `email`='{$userName}')");
+        if (valid_mobile($userName)) {
+            $this->db->where('phone', $userName);
+        } else {
+            $this->db->where('email', $userName);
+        }
         return $this->db->update($this->table, $data);
     }
     
@@ -143,27 +102,5 @@ class User_model extends CI_Model
         );
         $this->db->where('uid', $uid);
         $this->db->update($this->table, $data);
-    }
-    
-    /**
-     * 验证用户名称
-     * @param unknown $user_name
-     */
-    public function validateExistUser($user_name)
-    {
-        $this->db->where('user_name', $user_name);
-        return $this->db->count_all_results($this->table);
-    }
-    
-    //验证用户名是否已存在
-    public function findByUserName($postData)
-    {
-        if (!empty($postData['user_name'])) {
-            $this->db->where('user_name', $postData['user_name']);
-            if (!empty($postData['alias_name'])) {
-                $this->db->or_where('alias_name', $postData['alias_name']);
-            }
-        }
-        return $this->db->get($this->table);
     }
 }

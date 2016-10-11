@@ -73,7 +73,7 @@ class Register extends MW_Controller
             $parent_id = 1;// 妙处网总部
         }
         $this->db->trans_start();
-        $userId = $this->user->insertUser($this->input->post(), $parent_id);
+        $userId = $this->user->insert($this->input->post(), $parent_id);
         $getCoupon = $this->getCoupon($coupon_set_id=1, $userId);
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
@@ -94,14 +94,14 @@ class Register extends MW_Controller
         set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),7200);
         $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->ucenter_url;
-        $param = array(
+        $params = array(
             'uid'  =>  $userId,
             'log_time' => date('Y-m-d H:i:s'),
             'ip_from'  => getIP(),
             'operate_type'  => 1,
             'status' => 1
         );
-        $this->user_log->insertUserLog($param);
+        $this->user_log->insert($params);
         $this->jsonMessage('',$backurl);
     }
     
@@ -222,9 +222,9 @@ class Register extends MW_Controller
         $this->db->trans_start();
         $result = $this->getpwd_phone->validateName(array('phone'=>$phone));
         if ($result->num_rows() > 0) {
-            $result1 = $this->getpwd_phone->updateGetpwdPhone(array('phone'=>$phone, 'code'=>$code));
+            $result1 = $this->getpwd_phone->update(array('phone'=>$phone, 'code'=>$code));
         } else {
-            $result1 = $this->getpwd_phone->insertGetpwdPhone(array('phone'=>$phone, 'code'=>$code));
+            $result1 = $this->getpwd_phone->insert(array('phone'=>$phone, 'code'=>$code));
         }
         $this->sendToSms($phone, '您于'.date('Y-m-d H:i:s').'注册会员，验证码为:'.$code.'，有效期为10分钟。');
         $this->db->trans_complete();
