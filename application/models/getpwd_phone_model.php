@@ -6,7 +6,6 @@ class Getpwd_phone_model extends CI_Model
     public function insert($postData=array())
     {
         $data = array(
-            'username' => $postData['phone'],
             'phone'    => $postData['phone'],
             'code'     => md5($postData['code']),
             'addtime'  => date('Y-m-d H:i:s'),
@@ -17,9 +16,9 @@ class Getpwd_phone_model extends CI_Model
         return $this->db->insert_id();
     }
     
-    public function validateName($postData=array(), $failtime=false)
+    public function validatePhone($postData=array(), $failtime=false)
     {
-        $this->db->where('username', $postData['phone']);
+        $this->db->where('phone', $postData['phone']);
         if (!empty($postData['verify'])) {
             $this->db->where('code', md5($postData['verify']));
         }
@@ -38,7 +37,7 @@ class Getpwd_phone_model extends CI_Model
             'failtime' => date('Y-m-d H:i:s', strtotime('+10 minutes')),
             'flag'     => 0,
         );
-        $this->db->where('username', $postData['phone']);
+        $this->db->where('phone', $postData['phone']);
         return $this->db->update($this->table, $data);
     }
 }
