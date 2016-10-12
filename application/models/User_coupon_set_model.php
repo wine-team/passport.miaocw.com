@@ -1,7 +1,7 @@
 <?php
 class User_coupon_set_model extends CI_Model
 {
-    private $table = 'user_coupon_set';
+     private $table = 'user_coupon_set';
 
     public function findById($coupon_set_id)
     {

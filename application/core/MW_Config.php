@@ -1,13 +1,13 @@
 <?php
 class MW_Config extends CI_Config 
 {
-    public $main_base_url  =  'http://www.miaocw.com/';
-    public $images_url     =  'http://images.miaocw.com/';
-    public $skins_url      =  'http://skins.miaocw.com/';
-    public $passport_url   =  'http://passport.miaocw.com/';
-    public $help_url       =  'http://help.miaocw.com/';
-    public $ucenter_url    =  'http://ucenter.miaocw.com/';
-
+	public $main_base_url  =  'http://www.miaocw.com/';
+	public $images_url     =  'http://images.miaocw.com/';
+	public $skins_url      =  'http://skins.miaocw.com/';
+	public $passport_url   =  'http://passport.miaocw.com/';
+	public $help_url       =  'http://help.miaocw.com/';
+	public $ucenter_url    =  'http://ucenter.miaocw.com/';
+    
      /**
      * 图片上传路径
      * $dirname 文件夹名称

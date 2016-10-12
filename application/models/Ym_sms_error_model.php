@@ -1,7 +1,7 @@
 <?php
 class Ym_sms_error_model extends CI_Model
 {
-    private $table = 'ym_sms_error';
+     private $table = 'ym_sms_error';
 
     public function insertYmSmsError($telephone, $content, $error_id=0, $sms_type=1)
     {
