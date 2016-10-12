@@ -1,7 +1,7 @@
 <?php
 class User_coupon_get_model extends CI_Model
 {
-    private $table = 'user_coupon_get';
+     private $table = 'user_coupon_get';
 
     public function insert($postData=array())
     {
