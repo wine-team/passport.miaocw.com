@@ -62,7 +62,7 @@
                     </li>
                     <li class="clearfix">
                         <div class="init-login">
-                            <input class="input-text required" id="mobile_phone" name="mobile_phone" type="text" placeholder="手机" />
+                            <input class="input-text required" id="phone" name="phone" type="text" placeholder="手机" />
                             <i class="iconfont photo-icon">&#xe602;</i>
                         </div>
                     </li>

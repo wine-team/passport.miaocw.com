@@ -3,17 +3,26 @@ class MW_Controller extends CI_Controller
 {
     protected $frontUser = false;
     public $uid;
-    public $userType;
-    public $userName;
-   
+    public $aliasName; //用户昵称
+    public $userPhone; //用户手机号
+    public $userEmail; //用户邮箱
+    public $parentId;  //上级用户UID
+    public $userLevel; //用户级别
+    public $userPhoto; //用户头像
+
     public function __construct()
     {
         parent::__construct();
         $frontUser = get_cookie('frontUser');
         if ($frontUser) {
-            $this->frontUser = unserialize( base64_decode($frontUser) ); 
-            $this->uid = $this->frontUser['uid'];
-            $this->userName = $this->frontUser['userName'];
+            $this->frontUser = unserialize(base64_decode($frontUser));
+            $this->uid       = $this->frontUser['uid'];
+            $this->aliasName = $this->frontUser['aliasName'];
+            $this->userPhone = $this->frontUser['userPhone'];
+            $this->userEmail = $this->frontUser['userEmail'];
+            $this->parentId  = $this->frontUser['parentId'];
+            $this->userLevel = $this->frontUser['userLevel'];
+            $this->userPhoto = $this->frontUser['userPhoto'];
         }
         $this->_init(); //用着重载
         
@@ -187,7 +196,7 @@ class MW_Controller extends CI_Controller
     {
         $suffix = '';
         if ($getParam) {
-            $param = http_build_query($this->input->get());
+            $param = http_build_query($getParam);
             $suffix = '?'.$param;
         }
         return $suffix;
@@ -196,7 +205,7 @@ class MW_Controller extends CI_Controller
     public function getCaptcha($font_size=20, $img_width=100, $img_height=30, $count=4)
     {
         $this->load->helper('captcha');
-        $str = 'abcdefghgkmnpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUXWXYZ123456789';
+        $str = 'abcdefghgkmnpqrstuvwxyzABCDEFGHJKLMNOPQRSTUXWXYZ23456789';
         $word = '';
         for ($i=0; $i < $count; $i++) {
             $word .= $str[mt_rand(0,strlen($str)-1)];

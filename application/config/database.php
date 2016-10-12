@@ -83,14 +83,14 @@ $db['default'] = array(
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
+	'cache_on' => TRUE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
 	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
-	'encrypt' => FALSE,
+	'encrypt' => TRUE,
 	'compress' => FALSE,
-	'stricton' => FALSE,
+	'stricton' => TRUE,
 	'failover' => array(),
 	'save_queries' => TRUE
 );

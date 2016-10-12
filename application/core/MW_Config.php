@@ -1,6 +1,7 @@
 <?php
 class MW_Config extends CI_Config 
 {
+<<<<<<< HEAD
 	public $main_base_url  =  'http://www.miaocw.com/';
 	public $images_url     =  'http://images.miaocw.com/';
 	public $skins_url      =  'http://skins.miaocw.com/';
@@ -8,6 +9,15 @@ class MW_Config extends CI_Config
 	public $help_url       =  'http://help.miaocw.com/';
 	public $ucenter_url    =  'http://ucenter.miaocw.com/';
     
+=======
+    public $main_base_url  =  'http://www.miaocw.com/';
+    public $images_url     =  'http://images.miaocw.com/';
+    public $skins_url      =  'http://skins.miaocw.com/';
+    public $passport_url   =  'http://passport.miaocw.com/';
+    public $help_url       =  'http://help.miaocw.com/';
+    public $ucenter_url    =  'http://ucenter.miaocw.com/';
+
+>>>>>>> 91d9c1afef759ccdffdb1fa78fe1693627a7a03f
      /**
      * 图片上传路径
      * $dirname 文件夹名称
@@ -16,9 +26,9 @@ class MW_Config extends CI_Config
     public function upload_image_path($dirname, $imageName = '')
     {
         if (!empty($imageName)) {
-            return dirname(FCPATH).'/images/'.$dirname.'/'.$imageName;
+            return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/'.$imageName;
         }
-        return dirname(FCPATH).'/images/'.$dirname.'/';
+        return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/';
     }
     
     /**
@@ -43,9 +53,9 @@ class MW_Config extends CI_Config
     {
         if (!empty($imageName)) {
             $imageName = $this->get_thumb_image_name($imageName);
-            return dirname(FCPATH).'/images/'.$dirname.'/'.$imageName;
+            return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/'.$imageName;
         }
-        return dirname(FCPATH).'/images/'.$dirname.'/';
+        return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/';
     }
     
     /**
@@ -53,13 +63,13 @@ class MW_Config extends CI_Config
      * $dirname 文件夹名称
      * $imageName 图片名称
      */
-    public function show_image_thumb_url($dirname, $imageName = '',$resize='360')
+    public function show_image_thumb_url($dirname, $imageName = '', $resize = '360')
     {
-    	if (!empty($imageName)) {
-    		$imageName = $this->get_thumb_image_name($imageName,$resize);
-    		return $this->images_url.$dirname.'/'.$imageName;
-    	}
-    	return $this->images_url.$dirname.'/';
+        if (!empty($imageName)) {
+            $imageName = $this->get_thumb_image_name($imageName, $resize);
+            return $this->images_url.$dirname.'/'.$imageName;
+        }
+        return $this->images_url.$dirname.'/';
     }
     
     /**
@@ -67,16 +77,15 @@ class MW_Config extends CI_Config
      * @param unknown $imageName
      * @return unknown|string
      */
-    private function get_thumb_image_name($imageName,$resize)
+    private function get_thumb_image_name($imageName, $resize)
     {
-    	if (strpos($imageName, '/') === false) {
-    		return $imageName;
-    	}
-    	$imageNamePath = explode('/', $imageName, 2);
-    	$oldDirData  = $imageNamePath[0];
-    	$oldFileData = explode('.',$imageNamePath[1]);
-    	$imageName = $oldDirData.'/thumb/'.$oldFileData[0].'_'.$resize.'x'.$resize.'.'.$oldFileData[1];
-    	return $imageName;
+        if (strpos($imageName, '/') === false) {
+            return $imageName;
+        }
+        $imageNamePath = explode('/', $imageName, 2);
+        $oldDirData  = $imageNamePath[0];
+        $oldFileData = explode('.', $imageNamePath[1]);
+        $imageName = $oldDirData.'/thumb/'.$oldFileData[0].'_'.$resize.'x'.$resize.'.'.$oldFileData[1];
+        return $imageName;
     }
-    
 }
