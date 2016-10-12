@@ -7,5 +7,5 @@ class Advert_model extends CI_Model
     {
         $this->db->where('source_state', $source_state);
         return $this->db->get($this->table);
-    }
+    } 
 }
