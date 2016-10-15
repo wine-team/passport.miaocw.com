@@ -11,7 +11,7 @@
     </div>
     <div class="success-text-footer">
         <div class="text-footer clearfix">
-            <img src="passport/pc/images/erweima.png">
+            <img src="passport/images/weixin.png">
             <p>扫一扫，关注妙处网微信公众号</p>
         </div>
     </div>
