@@ -13,6 +13,7 @@ class Register extends MW_Controller
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
         $this->load->model('User_coupon_set_model','user_coupon_set');
         $this->load->model('User_coupon_get_model','user_coupon_get');
+        $this->load->model('User_invite_code_model','user_invite_code');
     }
     
      /**
@@ -66,7 +67,7 @@ class Register extends MW_Controller
             $this->jsonMessage('该用户名已经存在');
         }
         if ($this->input->post('invite_code')) {
-            $parent = $this->user->validateInviteCode($this->d['invite_code']);
+            $parent = $this->user_invite_code->validateInviteCode($this->d['invite_code']);
             if ($parent->num_rows() > 0) {
                 $parent_id = $parent->row(0)->uid;
             } else {
@@ -78,6 +79,7 @@ class Register extends MW_Controller
         $this->d['photo'] = rand(0, 9).'jpg'; //默认生成一张0-9的jpg图片
         $this->db->trans_start();
         $userId = $this->user->insert($this->d, $parent_id);
+        $inviteCode = $this->user_invite_code->insert(array('uid'=>$userId)); //自动生成唯一邀请码
         $getCoupon = $this->getCoupon($coupon_set_id = 1, $userId);
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
