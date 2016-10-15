@@ -48,7 +48,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="apartfrom-cellular">推荐人：</td>
+                            <td class="apartfrom-cellular">邀请码：</td>
                             <td class="apartfrom-position-hao">
                                 <input type="text" name="invite_code" value="<?php echo $invite_code ?>" <?php if (!empty($invite_code)) :?>readonly="readonly"<?php endif;?> placeholder="请填写邀请码，若无则不填" autocomplete="off"/>
                             </td>
