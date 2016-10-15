@@ -81,6 +81,7 @@ class Register extends MW_Controller
         $userId = $this->user->insert($this->d, $parent_id);
         $inviteCode = $this->user_invite_code->insert(array('uid'=>$userId)); //自动生成唯一邀请码
         $getCoupon = $this->getCoupon($coupon_set_id = 1, $userId);
+        $userLog = $this->user_log->insert($userId, $ip_from=getIP(), $operate_type=1, $status=1);
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             $this->jsonMessage('服务器忙，请稍候再试');
@@ -96,14 +97,6 @@ class Register extends MW_Controller
         set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), 7200);
         $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->ucenter_url;
-        $params = array(
-            'uid'           => $userId,
-            'log_time'      => date('Y-m-d H:i:s'),
-            'ip_from'       => getIP(),
-            'operate_type'  => 1,
-            'status'        => 1
-        );
-        $this->user_log->insert($params);
         $this->jsonMessage('', $backurl);
     }
     

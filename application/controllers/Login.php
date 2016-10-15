@@ -98,14 +98,7 @@ class Login extends MW_Controller
         set_cookie('frontUser',base64_encode(serialize($userInfor)), $expireTime);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), $expireTime);
         $backUrl = empty($d['backurl']) ? $this->config->main_base_url : $d['backurl'];
-        $params = array(
-            'uid'          => $user->uid,
-            'log_time'     => date('Y-m-d H:i:s'),
-            'ip_from'      => getIP(),
-            'operate_type' => 1,
-            'status'       => 1
-        );
-        $this->user_log->insert($params);
+        $userLog = $this->user_log->insert($user->uid, $ip_from=getIP(), $operate_type=1, $status=1);
         $this->jsonMessage('', $backUrl);
     }
 
