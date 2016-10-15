@@ -26,10 +26,9 @@ class Login extends MW_Controller
         } else {
             $data['backurl'] = $this->config->main_base_url;
         }
+        $data['advert'] = $this->advert->findBySourceState(2);
         $data['captcha'] = $this->getCaptcha();
         $data['err_count'] = get_cookie('err_count');
-        $res = $this->advert->findBySourceState(2)->row_array();
-        $data['login_bg'] = isset($res['picture']) ? $this->config->show_image_url('advert', $res['picture']) : 'passport/images/login-bg.jpg';
         $this->load->view('login/index', $data);
     }
     
@@ -85,11 +84,11 @@ class Login extends MW_Controller
             if (strtoupper($d['captcha']) != strtoupper(get_cookie('captcha'))) {
                 $this->jsonMessage('验证码不正确');
             }
-            $user = $this->user->quick_login($d);
+            $user = $this->quickLogin($d);
         }
         $userInfor = array(
             'uid'       => $user->uid,
-            'aliasName' => $user->alias_name,
+            'aliasName' => !empty($user->alias_name) ? $user->alias_name : $user->phone,
             'userPhone' => $user->phone,
             'userEmail' => $user->email,
             'parentId'  => $user->parent_id,
@@ -113,7 +112,7 @@ class Login extends MW_Controller
     /**
      * 快速登录验证
      */
-    public function quick_login($data=array())
+    public function quickLogin($data = array())
     {
         if (empty($data['phone'])) {
             $this->jsonMessage('请输入手机号码');
@@ -127,14 +126,9 @@ class Login extends MW_Controller
         }
         $res = $result->row(0);
 
-        $result1 = $this->getpwd_phone->validatePhone(array('username' => $data['phone'], 'code' => md5($data['verify'])), 'id, addtime, failtime');
+        $result1 = $this->getpwd_phone->validatePhone(array('phone' => $data['phone'], 'code' => md5($data['verify'])), TRUE);
         if ($result1->num_rows() <= 0) {
-            $this->jsonMessage('动态密码无效');
-        }
-        $_res = $result1->row_array();
-
-        if (!((time()>=strtotime($_res['addtime'])) && (time()<=strtotime($_res['failtime'])))) {
-            $this->jsonMessage('动态密码失效，请重新获取');
+            $this->jsonMessage('动态密码输入错误或已失效，请重新获取');
         }
         if ($res->flag == 2) {
             $this->jsonMessage('此帐号已被冻结，请与管理员联系');
@@ -153,7 +147,6 @@ class Login extends MW_Controller
         $this->cache->memcached->delete('frontUser');
         $this->redirect($this->config->main_base_url);
     }
-    
     
      /**
      * 验证登录页手机动态码

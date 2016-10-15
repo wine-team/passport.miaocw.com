@@ -63,6 +63,8 @@ class User_model extends CI_Model
             'alias_name'     => $postData['phone'],
             'phone'          => $postData['phone'],
             'password'       => sha1(base64_encode($postData['password'])),
+            'parent_id'      => $parent_id,
+            'invite_code'    => $postData['invite_code'],
             'sex'            => 1,
             'birthday'       => date('Y-m-d H:i:s'),
             'user_money'     => 0,
@@ -70,8 +72,7 @@ class User_model extends CI_Model
             'pay_points'     => 0,
             'flag'           => 1,
             'sms'            => 1,
-            'parent_id'      => $parent_id,
-            'photo'          => rand(0, 9).'.jpg',
+            'photo'          => $postData['photo'],
             'created_at'     => date('Y-m-d H:i:s')
         );
         if (!empty($postData['email'])) {

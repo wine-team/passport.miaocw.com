@@ -1,7 +1,11 @@
 <?php $this->load->view('layout/header');?>
 <div class="bz-login">
     <div class="login-img">
-       <img src="<?php echo $login_bg?>"/>
+        <?php if ($advert->num_rows() > 0) : ?>
+            <?php foreach ($advert->result() as $item) : ?>
+                <img src="<?php echo isset($item->picture) ? $this->config->show_image_url('advert', $item->picture) : 'passport/images/login-bg.jpg' ?>"/>
+            <?php endforeach;?>
+        <?php endif; ?>
     </div>
     <div class="login-con">
         <div class="login">
@@ -18,7 +22,7 @@
                     </li>
                     <li class="clearfix">
                         <div class="init-login">
-                            <input type="text" name="username" id="username" class="input-text required"  placeholder="会员名/手机号">
+                            <input type="text" name="username" id="username" class="input-text required"  placeholder="邮箱/手机号">
                             <i class="iconfont photo-icon">&#xe603;</i>
                         </div>
                     </li>
@@ -62,7 +66,7 @@
                     </li>
                     <li class="clearfix">
                         <div class="init-login">
-                            <input class="input-text required" id="phone" name="phone" type="text" placeholder="手机" />
+                            <input class="input-text required" id="phone" name="phone" type="text" placeholder="手机号" />
                             <i class="iconfont photo-icon">&#xe602;</i>
                         </div>
                     </li>

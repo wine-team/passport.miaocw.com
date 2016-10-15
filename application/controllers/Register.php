@@ -1,8 +1,11 @@
 <?php 
 class Register extends MW_Controller
 {
+    private $d;
+
     public function _init()
     {
+        $this->d = $this->input->post();
         $this->load->helper(array('ip','email'));
         $this->load->library(array('encrypt'));
         $this->load->model('user_model', 'user');
@@ -20,11 +23,11 @@ class Register extends MW_Controller
         if ($this->frontUser) {
             $this->redirect($this->config->main_base_url);
         }
-        $username = $this->input->get('username');
-        if (!empty($username)) {
-            $data['parent_id'] = $username;
+        $inviteCode = $this->input->get('invite_code');
+        if (!empty($inviteCode)) {
+            $data['invite_code'] = $inviteCode;
         } else {
-            $data['parent_id'] = get_cookie('user_name');
+            $data['invite_code'] = get_cookie('invite_code');
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
             $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
@@ -45,64 +48,61 @@ class Register extends MW_Controller
      */
     public function doRegister()
     {
-        $username = $this->input->post('phone',true);
-        if (empty($username)) {
+        $phone = $this->input->post('phone', TRUE);
+        if (empty($phone)) {
             $this->jsonMessage('请输入手机号码');
         }
-        if (strlen($this->input->post('password'))<6 || strlen($this->input->post('confirm_password'))<6){
+        if (strlen($this->d['password']) < 6 || strlen($this->d['confirm_password']) < 6) {
             $this->jsonMessage('密码长度不小于6位');
         }
-        if (!valid_mobile($username) ) {
+        if (!valid_mobile($phone) ) {
             $this->jsonMessage('手机号码格式有误');
         }
-        if ($this->input->post('password') != $this->input->post('confirm_password')) {
+        if ($this->d['password'] != $this->d['confirm_password']) {
             $this->jsonMessage('密码输入不一致');
         }
-        $result = $this->user->validateName($username);
+        $result = $this->user->validatePhone($phone);
         if ($result->num_rows() > 0) {
             $this->jsonMessage('该用户名已经存在');
         }
-        if ($this->input->post('parent_id')) {
-            $parent = $this->user->validateName($this->input->post('parent_id'));
+        if ($this->input->post('invite_code')) {
+            $parent = $this->user->validateInviteCode($this->d['invite_code']);
             if ($parent->num_rows() > 0) {
                 $parent_id = $parent->row(0)->uid;
             } else {
-                $this->jsonMessage('推荐码无效');
+                $this->jsonMessage('邀请码无效');
             }
         } else {
             $parent_id = 1;// 妙处网总部
         }
+        $this->d['photo'] = rand(0, 9).'jpg'; //默认生成一张0-9的jpg图片
         $this->db->trans_start();
-        $userId = $this->user->insert($this->input->post(), $parent_id);
-        $getCoupon = $this->getCoupon($coupon_set_id=1, $userId);
+        $userId = $this->user->insert($this->d, $parent_id);
+        $getCoupon = $this->getCoupon($coupon_set_id = 1, $userId);
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             $this->jsonMessage('服务器忙，请稍候再试');
         }
         $userInfor = array(
-            'uid'      => $userId,
-            'userName' => $username
-        );
-        $userInfor = array(
-            'uid'       => $user->uid,
-            'aliasName' => $user->alias_name,
-            'userPhone' => $user->phone,
-            'userEmail' => $user->email,
-            'parentId'  => $user->parent_id,
-            'userPhoto' => $user->photo,
+            'uid'       => $userId,
+            'aliasName' => $phone,
+            'userPhone' => $phone,
+            'userEmail' => '',
+            'parentId'  => $parent_id,
+            'userPhoto' => $this->d['photo'],
         );
         set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
-        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)),7200);
+        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), 7200);
         $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->ucenter_url;
         $params = array(
-            'uid'  =>  $userId,
-            'log_time' => date('Y-m-d H:i:s'),
-            'ip_from'  => getIP(),
+            'uid'           => $userId,
+            'log_time'      => date('Y-m-d H:i:s'),
+            'ip_from'       => getIP(),
             'operate_type'  => 1,
-            'status' => 1
+            'status'        => 1
         );
         $this->user_log->insert($params);
-        $this->jsonMessage('',$backurl);
+        $this->jsonMessage('', $backurl);
     }
     
      /**
@@ -111,7 +111,7 @@ class Register extends MW_Controller
      */
     private function getCoupon($coupon_set_id, $uid)
     {
-        $couponRes = $this->user_coupon_set->findById($coupon_set_id);
+        $couponRes = $this->user_coupon_set->findByCouponSetId($coupon_set_id);
         if ($couponRes->num_rows()<=0) {
             return false;
         }
@@ -133,7 +133,7 @@ class Register extends MW_Controller
         
         $status = $this->user_coupon_get->insert($param);
         if ($status) {
-             $res = $this->user_coupon_set->setCouponNum($coupon_set_id,$num=1);
+             $res = $this->user_coupon_set->setCouponNum($coupon_set_id, $num=1);
         }
         return $status;
     }
