@@ -1,4 +1,4 @@
-<?php $this->load->view('pc/layout/header');?>
+<?php $this->load->view('layout/header');?>
 <div class="success-register">
     <div class="success-text">
         <p class="suc-your">恭喜您，您已经成功注册贝竹一站通！</p>
@@ -12,8 +12,8 @@
     <div class="success-text-footer">
         <div class="text-footer clearfix">
             <img src="passport/pc/images/erweima.png">
-            <p>扫码，下载贝竹一站通手机客户端</p>
+            <p>扫一扫，关注妙处网微信公众号</p>
         </div>
     </div>
 </div>
-<?php $this->load->view('pc/layout/footer');?>
+<?php $this->load->view('layout/footer');?>

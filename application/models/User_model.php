@@ -64,7 +64,6 @@ class User_model extends CI_Model
             'phone'          => $postData['phone'],
             'password'       => sha1(base64_encode($postData['password'])),
             'parent_id'      => $parent_id,
-            'invite_code'    => $postData['invite_code'],
             'sex'            => 1,
             'birthday'       => date('Y-m-d H:i:s'),
             'user_money'     => 0,

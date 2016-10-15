@@ -21,7 +21,7 @@ class MW_Controller extends CI_Controller
             $this->userPhone = $this->frontUser['userPhone'];
             $this->userEmail = $this->frontUser['userEmail'];
             $this->parentId  = $this->frontUser['parentId'];
-            $this->userLevel = $this->frontUser['userLevel'];
+            //$this->userLevel = $this->frontUser['userLevel'];
             $this->userPhoto = $this->frontUser['userPhoto'];
         }
         $this->_init(); //用着重载

@@ -96,7 +96,7 @@ class Register extends MW_Controller
         );
         set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), 7200);
-        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->ucenter_url;
+        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->passport_url.'register/regsuccess.html';
         $this->jsonMessage('', $backurl);
     }
     
@@ -138,8 +138,7 @@ class Register extends MW_Controller
      */
     public function regsuccess()
     {
-        $frontUser = $this->frontUser;
-        $data['username'] = $frontUser['OWNER_NAME'];
+        $data['username'] = $this->userPhone;
         $this->load->view('register/regsuccess', $data);
     }
     
