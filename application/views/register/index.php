@@ -5,7 +5,6 @@
             <div class="title">
                 <div class="apartfrom-left-center clearfix">
                     <p>会员注册</p>
-                    <span class="apartfrom-triangle"></span>
                 </div>
             </div>
             <div class="apartfrom-left-test">
