@@ -56,7 +56,7 @@
                             <td class="apartfrom-cellular"></td>
                             <td class="apartfrom-fise">
                                 <input type="checkbox" name="is_check" checked="checked" class="required">
-                                <p>我已阅读并接受<a href="javascript:;">《妙处网站服务协议》</a></p>
+                                <p>我已阅读并接受<a href="<?php echo $this->config->help_url.'help_center/index/29.html'?>" target="_blank">《妙处网站服务协议》</a></p>
                             </td>
                         </tr>
                         <tr>
