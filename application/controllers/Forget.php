@@ -70,7 +70,7 @@ class Forget extends MW_Controller
         } else {
             $phone = $user->phone;
         }
-        $data['user_name'] = empty($user->phone) ? $user->email : $user->phone;
+        $data['user_name'] = empty($user->phone) ? $this->encrypt->encode($user->email) : $this->encrypt->encode($user->phone);
         $data['encode_phone'] = $this->encrypt->encode($phone);
         $data['phone'] = substr_replace($phone, '****', 3, 4);
         $this->load->view('forget/confirm', $data);
@@ -83,7 +83,7 @@ class Forget extends MW_Controller
         if (!valid_mobile($phone)) {
             $this->jsonMessage('手机号码有误');
         }
-        $code = mt_rand(1000, 9999);
+        $code = mt_rand(100000, 999999);
         $this->db->trans_start();
         $result = $this->getpwd_phone->validatePhone(array('phone'=>$phone));
         if ($result->num_rows() > 0) {
@@ -130,12 +130,15 @@ class Forget extends MW_Controller
         if ($this->frontUser) { //如果已经登录，就跳转到首页。
             $this->redirect($this->config->main_base_url);
         }
-        $username = urldecode($this->encrypt->decode($this->input->get('keycode')));
+        $username = $this->encrypt->decode(urldecode($this->input->get('keycode')));
         $result = $this->user->validateName($username);
         if ($result->num_rows() <= 0) {
             $this->alertJumpPre('帐号有误，请联系客服解决问题');
         }
-        $data['user'] = $result->row();
+        $user = $result->row();
+        $data['user'] = $user;
+        $username = $user->phone ? $user->phone : $user->email;
+        $data['username'] = $this->encrypt->encode($username);
         $this->load->view('forget/modify', $data);
     }
     
@@ -147,10 +150,12 @@ class Forget extends MW_Controller
         if ($this->input->post('password') != $this->input->post('confirm_password')) {
             $this->jsonMessage('密码输入不一致');
         }
-        $result = $this->user->validateName($this->input->post('username'));
+        $username = urldecode($this->encrypt->decode($this->input->post('username')));
+        $result = $this->user->validateName($username);
         if ($result->num_rows() <= 0) {
             $this->jsonMessage('不可修改密码，请联系管理员');
         }
+        $_POST['username'] = $username;
         $modify = $this->user->modifyPassword($this->input->post());
         if (!$modify) {
             $this->jsonMessage('服务器忙，请稍候再试');

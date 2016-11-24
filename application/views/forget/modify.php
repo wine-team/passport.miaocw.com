@@ -37,7 +37,7 @@
         <form class="forget-modify-password forget-form-type">
               <div class="add-group clearfix">
                   <label class="add-label">新的密码：</label>
-                  <input type="hidden" name="username" value="<?php echo $user->phone ? $user->phone : $user->email;?>">
+                  <input type="hidden" name="username" value="<?php echo $username ?>">
                   <input type="password" name="password" id="password" minlength="6" class="add-control required">
                   <span class="error"></span>
               </div>
