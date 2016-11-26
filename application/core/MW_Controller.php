@@ -226,6 +226,41 @@ class MW_Controller extends CI_Controller
     }
     
     /**
+     * CURL 获取参数
+     * @param unknown $url
+     * @param unknown $keysArr
+     * @param string $mothod
+     * @param number $is_header
+     * @param number $flag
+     * @return unknown
+     */
+    public function fn_get_contents( $url, $keysArr = array(), $mothod = 'get', $is_header = 1, $flag = 0 )
+    {
+        $ch = curl_init() ;
+        if ( !$flag )
+        {
+            curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false ) ;
+        }
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE ) ;
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, FALSE ) ;
+    
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true ) ;
+        if ( strtolower( $mothod ) == 'post' )
+        {
+            curl_setopt( $ch, CURLOPT_POST, true ) ;
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $keysArr ) ;
+        } else
+        {
+            $url = $url . "?" . http_build_query( $keysArr ) ;
+        }
+        curl_setopt( $ch, CURLOPT_URL, $url ) ;
+    
+        $ret = curl_exec( $ch ) ;
+        curl_close( $ch ) ;
+        return $ret ;
+    }
+    
+    /**
      * @param unknown $telephone
      * @param unknown $content
      * @param number $sms_type 1:56短信；2:第一短信平台;3:

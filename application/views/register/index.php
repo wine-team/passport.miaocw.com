@@ -71,9 +71,9 @@
             <div class="apartfrom-rapid">
                 <p>快速注册</p>
                 <div class="apartfrom-regter clearfix">
-                    <a href="javascript:;"><i class="iconfont">&#xe601;</i></a>
-                    <a href="javascript:;"><i class="iconfont">&#xe606;</i></a>
-                    <a href="javascript:;"><i class="iconfont zfb">&#xe608;</i></a>
+					<!-- <a href="javascript:;"><i class="iconfont">&#xe601;</i></a> -->
+					<!-- <a href="javascript:;"><i class="iconfont">&#xe606;</i></a> -->
+                    <a href="https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm?app_id=2016102100728300&scope=auth_userinfo&redirect_uri=<?php echo base_url('login/alipayAuth');?>"><i class="iconfont zfb">&#xe608;</i></a>
                 </div>
                 <p>已有账号，<a href="<?php echo site_url('login');?>">立即登录</a></p>
             </div>

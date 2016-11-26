@@ -5,6 +5,7 @@ class Login extends MW_Controller
     {
         $this->load->helper(array('ip','email'));
         $this->load->library(array('encrypt', 'sms/sms'));
+        $this->load->library('alipayauth/aliLogin', NULL, 'aliLogin');
         $this->load->model('advert_model', 'advert');
         $this->load->model('user_model', 'user');
         $this->load->model('user_log_model','user_log');
@@ -172,4 +173,110 @@ class Login extends MW_Controller
             $this->jsonMessage('网络繁忙，请稍后重新获取验证码');
         }
     }
+    
+     /**
+      * 支付宝用户授权登陆
+      * app_auth_token  令牌
+      * user_id  支付宝用户唯一UID
+     */
+    public function alipayAuth() {
+        
+    	$url = "https://openapi.alipaydev.com/gateway.do"; //测试参数
+    	$app_id = $this->input->get('app_id');
+    	$param = array(
+    			'app_id' => $app_id,
+    			'method' => "alipay.system.oauth.token",
+    			'charset' => "utf-8",
+    			'sign_type' => "RSA",
+    			'timestamp' => date('Y-m-d H:i:s'),
+    			'version' => "1.0",
+    			'grant_type' => "authorization_code",
+    			'code' => $this->input->get('auth_code'),
+    	);
+    	$param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
+    	$result = json_decode($this->fn_get_contents($url,$param,'post'));
+    	$alipayTokenResponse = $result->alipay_system_oauth_token_response;
+    	$access_token = $alipayTokenResponse->access_token;//交换令牌--用于获取用户信息
+    	$user_id = $alipayTokenResponse->user_id; //用户的userId--支付宝用户的唯一userId
+    	$this->getAlipayUserInfor($access_token,$app_id);
+    }
+    
+     /**
+     * 获取用户基础信息(姓别，姓名);
+     * @param unknown $auth_token
+     * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7386797.0.0.ETCoNL&treeId=53&articleId=104114&docType=1#s5
+     */
+    private function getAlipayUserInfor($auth_token,$app_id) {
+    	
+        $url = "https://openapi.alipaydev.com/gateway.do"; //测试参数
+        $param = array(
+                'method' => "alipay.user.userinfo.share",
+                'timestamp' => date('Y-m-d H:i:s'),
+                'app_id' => $app_id,
+                'auth_token' => $auth_token,
+                'charset' => "utf-8",
+                'sign_type' => "RSA",
+                'version' => "1.0",
+        );
+        $param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
+        $result = json_decode($this->fn_get_contents($url,$param,'post'));
+        $alipayUserInfor = $result->alipay_user_userinfo_share_response;
+        var_dump($alipayUserInfor);exit;
+    }
+    
+     /**
+      * 第三方应用授权(暂时不启用)
+      * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7386797.0.0.UiAPWO&treeId=216&articleId=105193&docType=1#s10
+     */ 
+    public function thirdAuth() {
+    	
+    	$this->load->library('alipayauth/aliLogin', NULL, 'aliLogin');
+    	$url = "https://openapi.alipaydev.com/gateway.do"; //测试参数
+    	$param = array(
+    			'app_id' => $this->input->get('app_id'),
+    			'method' => "alipay.open.auth.token.app",
+    			'charset' => "utf-8",
+    			'sign_type' => "RSA",
+    			'timestamp' => date('Y-m-d H:i:s'),
+    			'version' => "1.0",
+    			'grant_type' => "authorization_code",
+    	);
+    	$param['biz_content'] = json_encode(array(
+    			'grant_type' => "authorization_code",
+    			'code' => $this->input->get('app_auth_code'),
+    	));
+    	$param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
+    	$result = json_decode($this->fn_get_contents($url,$param,'get'));
+    	$alipayTokenResponse = $result->alipay_open_auth_token_app_response;
+    	$auth_auth_token = $alipayTokenResponse->app_auth_token;
+    	$app_id = $alipayTokenResponse->auth_app_id;
+    	var_dump($auth_token.'----'.$app_id);exit;
+    }
+    
+     /**
+     * 用户信息授权  --- 最终方法
+     * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.nboMQG&treeId=216&articleId=105656&docType=1#s4
+     */
+    public function userAuth(){
+    	
+    	$url = "https://openapi.alipaydev.com/gateway.do"; //测试参数
+    	$app_id = $this->input->get('app_id');
+    	$param = array(
+    			'app_id' => $app_id,
+    			'method' => "alipay.system.oauth.token",
+    			'charset' => "utf-8",
+    			'sign_type' => "RSA",
+    			'timestamp' => date('Y-m-d H:i:s'),
+    			'version' => "1.0",
+    			'grant_type' => "authorization_code",
+    			'code' => $this->input->get('auth_code'),
+    	);
+    	$param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
+    	$result = json_decode($this->fn_get_contents($url,$param,'post'));
+    	$alipayTokenResponse = $result->alipay_system_oauth_token_response;
+    	$access_token = $alipayTokenResponse->access_token;//交换令牌--用于获取用户信息
+    	$user_id = $alipayTokenResponse->user_id; //用户的userId--支付宝用户的唯一userId
+    	$this->getAlipayUserInfor($access_token,$app_id);
+    }
+  
 }
