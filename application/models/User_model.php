@@ -57,7 +57,7 @@ class User_model extends CI_Model
      * @param unknown $postData
      * @param string $parent_id
      */
-    public function insert($postData=array(), $parent_id=0)
+    public function insert($postData=array(), $parent_id=1)
     {
         $data = array(
             'alias_name'     => $postData['phone'],
@@ -79,6 +79,30 @@ class User_model extends CI_Model
         }
         $this->db->insert($this->table, $data);
         return $this->db->insert_id();
+    }
+    
+     /**
+     * 第三方授权登陆 比如支付宝  微信，新浪微博
+     * @param unknown $postData
+     * @param number $parent_id
+     */
+    public function authInsert($postData=array(), $parent_id=1) {
+    	
+    	$data = array(
+    			'alias_name'     => $postData['alias_name'],
+    			'parent_id'      => $parent_id,
+    			'sex'            => $postData['sex'],
+    			'birthday'       => date('Y-m-d H:i:s'),
+    			'user_money'     => 0,
+    			'frozen_money'   => 0,
+    			'pay_points'     => 0,
+    			'flag'           => 1,
+    			'sms'            => 1,
+    			'photo'          => $postData['photo'],
+    			'created_at'     => date('Y-m-d H:i:s')
+    	);
+    	$this->db->insert($this->table, $data);
+    	return $this->db->insert_id();
     }
     
     public function modifyPassword($postData=array())

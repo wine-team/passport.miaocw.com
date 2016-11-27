@@ -76,7 +76,7 @@ class Register extends MW_Controller
         } else {
             $parent_id = 1;// 妙处网总部
         }
-        $this->d['photo'] = rand(0, 9).'jpg'; //默认生成一张0-9的jpg图片
+        $this->d['photo'] = rand(0, 9).'.jpg'; //默认生成一张0-9的jpg图片
         $this->db->trans_start();
         $userId = $this->user->insert($this->d, $parent_id);
         $inviteCode = $this->user_invite_code->insert(array('uid'=>$userId)); //自动生成唯一邀请码
