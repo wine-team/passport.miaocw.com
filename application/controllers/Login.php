@@ -273,7 +273,7 @@ class Login extends MW_Controller
     			$parent_id = 1;// 妙处网总部
     		}
     		$param = array(
-    			'alias_name' => empty($alipayUserInfor->nick_name) ? '妙处网会员' : nick_name,
+    			'alias_name' => empty($alipayUserInfor->nick_name) ? '妙处网会员' : $alipayUserInfor->nick_name,
     		    'sex' => empty($alipayUserInfor->gender) ? '1' : (($alipayUserInfor->gender==m)? 1 : 2),
     		    'photo' => rand(0, 9).'.jpg',//默认生成一张0-9的jpg图片
     		);
