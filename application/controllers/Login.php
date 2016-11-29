@@ -185,7 +185,7 @@ class Login extends MW_Controller
      */
     public function alipayAuth() {
         
-    	$url = "https://openapi.alipaydev.com/gateway.do"; //测试参数
+    	$url = "https://openapi.alipay.com/gateway.do"; //测试参数
     	$app_id = $this->input->get('app_id');
     	$backurl = $this->input->get('backurl');
     	$invite_code = $this->input->get('invite_code');
@@ -214,7 +214,7 @@ class Login extends MW_Controller
      */
     private function getAlipayUserInfor($auth_token,$app_id,$backurl,$invite_code) {
     	
-        $url = "https://openapi.alipaydev.com/gateway.do"; //测试参数
+        $url = "https://openapi.alipay.com/gateway.do"; //测试参数
         $param = array(
                 'method' => "alipay.user.userinfo.share",
                 'timestamp' => date('Y-m-d H:i:s'),

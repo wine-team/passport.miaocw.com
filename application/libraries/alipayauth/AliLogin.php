@@ -5,12 +5,12 @@ class AliLogin {
 	private $format = "json";
 	private $charset = "UTF-8";
 	private $fileCharset = "UTF-8";
-	private $appId = "2016102100728300";
+	private $appId = "2016112403231302"; 
 	private $postCharset = "UTF-8";  // 表单提交字符集编码
 	private $rsaPrivateKeyFilePath;  //私钥文件路径
-	private $gatewayUrl = "https://openapi.alipaydev.com/gateway.do"; //https://openapi.alipay.com/gateway.do
-	private $rsaPrivateKey = "MIICXQIBAAKBgQDst7bCTETY6DD5em21VZiS5Gz0pJ0Of/d+yjbqRibLRNKqBNm0WxqBFaJtI5yOkOOx4nvTIpfAaF8767iXhkVeDidOcI7wAYEmwB5quAgHRgJ88D7czvx1hqnky049dtNqVpN/8Rm7RfuAIsPNbcjv8cBMG3E9PHkwx6ND1gSdBwIDAQABAoGAKTV+QmrmnWAmjnfKu4OwMPpFIX26vbh3TIJFdxlJTZ+okOKRR72IaqpqgVduvL7qdKA58DKYem1xDsxlcTN1xak3bWMTcSjV7VVuNnzxfiJiO2ij4uVou8xFncZIR37ZLAx2ALY4KvZ0rZ+so+vYaK0gUeulMscuKRRGqEFWERECQQD5Y5JacqO2EYOfnLWqKUdZKhh66LK36fY55zzEzOvaOxgvlyc3SBHfaXWAB7iYw9M2DFHOEr5Bv8BwH5/9cGf5AkEA8v4mnNtsWlsOsFMgfGE6N6WS9CEnHyLOK7jCjMaGHWBoGvUj1WBGuZQJaoVAPVQsbZhPY7cSy5Uma32GXLBs/wJBAKwH27U4z2WQv1MjLs2qm+UN/MUML/xeD9PxhyHamfd4PD7X7d1cgbezb7JZoSUAMHpgFS4qD8QbGgw+RIb3O0ECQEkwvDiq7uwYWUhLAZH1Ry/Ts3vNMJd0SF1q/U6hzWuzyie0huKSaTskl+F52WufmvI32lHSptqjRjtCR+JLUckCQQDhhyGu41vefeK6flcMPz7KukTDSWMTkPnXbgsXWmFt0h+xtxDqQ7ohmMT+ElAXkoeMAoAMKgkNaVwf1leHC2Xe"; //请填写开发者私钥去头去尾去回车，一行字符串
-	private $alipayrsaPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIgHnOn7LLILlKETd6BFRJ0GqgS2Y3mn1wMQmyh9zEyWlz5p1zrahRahbXAfCfSqshSNfqOmAQzSHRVjCqjsAw1jyqrXaPdKBmr90DIpIxmIyKXv4GGAkPyJ/6FTFY99uhpiq0qadD/uSzQsefWo0aTvP/65zi3eof7TcZ32oWpwIDAQAB";//请填写支付宝公钥，一行字符串
+	private $gatewayUrl = "https://openapi.alipay.com/gateway.do"; //https://openapi.alipay.com/gateway.do
+	private $rsaPrivateKey = "MIICXwIBAAKBgQC4tZ5DRmxevtnktPv2YsijWGyPCbErBQhCCS0QKvqzxZAdVoQ+UTxpsY9p/iezPgPvXbBAWU0H9ka/PlD4gJlCOuSL+WjYG5SzPXc+MjJ0DTQVKAygjneFqIU/B4DbbjEa1lG12pWx3qvow+/MgR/CzdWbBqz82Vxx3vTVBtfXeQIDAQABAoGBAIhIoPwcYutJP/Xqv5mca1Nyc67aRNlr/hrTMGekfpPT6jBrXGmqgLuvYhSfjOVIlZiwdNIV0atVP//tV8ry/6BHT+75dcKj/d4u7OeXQk5A/tEnjV8LzyZyU1RIG3vHCnzW7I/qWn9QlmEeX6s725Ntps5rbbUgQ5aPXmfSEaeBAkEA7KVp5MVonR+Buz3rdJCXwg3kJV7XY2yA0DELqXMN/p4XhBiU4F4stRa6PLgDXsEMuNQZ0deulnTRC/DZA1WRkQJBAMfQ0nWaSrzg9fSgF1APJ/eJsH9kGoMhwDK9IMhTQItcrJWgYyezyBXwCsBepEizaUtJLUrbOL72/NDvZPUrc2kCQQC78jwCF88YSzer0Ge6ckQ1OPcjvwlty3Ua5HkQoXJR8JlYrnU/JUx4no5XPwZeMRC7kqjXAmeE005cH3MbtNAhAkEApO+xmdPHl4uWWtv/Al3QXttwLmeiHtYwQXGuas2VvLO93jCrSG11Xu5q4Yn9z+kQpE1+LokwmSllXM4PJvU76QJBAIhc1nvF5j+wUxfBWcJyRkgNWqks95k0OqsaDOwy7qXE12PINB8pceBaxO7dRwMy0zQEApDSSwtgcA9Zj5pdNNk="; //请填写开发者私钥去头去尾去回车，一行字符串
+	private $alipayrsaPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";//请填写支付宝公钥，一行字符串
 
     
 	 /**
