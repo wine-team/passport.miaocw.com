@@ -5,7 +5,7 @@ class AliLogin {
 	private $format = "json";
 	private $charset = "UTF-8";
 	private $fileCharset = "UTF-8";
-	private $appId = "2016112403231302"; 
+	private $appId = "2016112403231302";  //开发id
 	private $postCharset = "UTF-8";  // 表单提交字符集编码
 	private $rsaPrivateKeyFilePath;  //私钥文件路径
 	private $gatewayUrl = "https://openapi.alipay.com/gateway.do"; //https://openapi.alipay.com/gateway.do
