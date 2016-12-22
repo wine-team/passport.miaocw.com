@@ -11,9 +11,9 @@ class Register extends MW_Controller
         $this->load->model('user_model', 'user');
         $this->load->model('user_log_model','user_log');
         $this->load->model('getpwd_phone_model', 'getpwd_phone');
-        $this->load->model('User_coupon_set_model','user_coupon_set');
-        $this->load->model('User_coupon_get_model','user_coupon_get');
-        $this->load->model('User_invite_code_model','user_invite_code');
+        $this->load->model('user_coupon_set_model','user_coupon_set');
+        $this->load->model('user_coupon_get_model','user_coupon_get');
+        $this->load->model('user_invite_code_model','user_invite_code');
     }
     
      /**
