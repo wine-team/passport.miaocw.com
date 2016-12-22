@@ -24,6 +24,7 @@ class Login extends MW_Controller {
 		if ($result->num_rows() <=0) {
 			$this->jsonMessage('用户名或密码错误');
 		}
+		
 		$user = $result->row();
 		if ($user->flag == 2) {
 			$this->jsonMessage('此帐号已被冻结');
