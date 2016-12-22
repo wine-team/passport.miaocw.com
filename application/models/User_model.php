@@ -13,9 +13,10 @@ class User_model extends CI_Model
      * 登陆获取
      * @param unknown $postData
      */
-    public function login($params=array())
+    public function login($params=array(),$f='*')
     {
         $userName = trim(addslashes($params['username']));
+        $this->db->select($f);
         if (valid_mobile($userName)) {
             $this->db->where('phone', $userName);
         } else {
