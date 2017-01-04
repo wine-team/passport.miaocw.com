@@ -7,11 +7,11 @@ class Register extends MW_Controller
     {
         $this->d = $this->input->post();
         $this->load->helper(array('ip','email'));
-        $this->load->model('m/user_model', 'user');
-        $this->load->model('m/user_log_model','user_log');
-        $this->load->model('m/user_coupon_set_model','user_coupon_set');
-        $this->load->model('m/user_coupon_get_model','user_coupon_get');
-        $this->load->model('m/user_invite_code_model','user_invite_code');
+        $this->load->model('user_model', 'user');
+        $this->load->model('user_log_model','user_log');
+        $this->load->model('user_coupon_set_model','user_coupon_set');
+        $this->load->model('user_coupon_get_model','user_coupon_get');
+        $this->load->model('user_invite_code_model','user_invite_code');
     }
       
      /**

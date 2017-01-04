@@ -8,12 +8,12 @@ class Register extends MW_Controller
         $this->d = $this->input->post();
         $this->load->helper(array('ip','email'));
         $this->load->library(array('encrypt'));
-        $this->load->model('user_model', 'user');
-        $this->load->model('user_log_model','user_log');
-        $this->load->model('getpwd_phone_model', 'getpwd_phone');
-        $this->load->model('user_coupon_set_model','user_coupon_set');
-        $this->load->model('user_coupon_get_model','user_coupon_get');
-        $this->load->model('user_invite_code_model','user_invite_code');
+        $this->load->model('pc/user_model', 'user');
+        $this->load->model('pc/user_log_model', 'user_log');
+        $this->load->model('pc/getpwd_phone_model', 'getpwd_phone');
+        $this->load->model('pc/user_coupon_set_model', 'user_coupon_set');
+        $this->load->model('pc/user_coupon_get_model', 'user_coupon_get');
+        $this->load->model('pc/user_invite_code_model', 'user_invite_code');
     }
     
      /**
@@ -41,7 +41,7 @@ class Register extends MW_Controller
             $data['backurl'] = $this->config->main_base_url;
         }
         $data['captcha'] = $this->getCaptcha();
-        $this->load->view('register/index',$data);
+        $this->load->view('pc/register/index',$data);
     }
     
     /**
@@ -96,7 +96,7 @@ class Register extends MW_Controller
         );
         set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
         $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), 7200);
-        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->passport_url.'register/regsuccess.html';
+        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->passport_url.'pc/register/regsuccess.html';
         $this->jsonMessage('', $backurl);
     }
     
@@ -139,7 +139,7 @@ class Register extends MW_Controller
     public function regsuccess()
     {
         $data['username'] = $this->userPhone;
-        $this->load->view('register/regsuccess', $data);
+        $this->load->view('pc/register/regsuccess', $data);
     }
     
     /**

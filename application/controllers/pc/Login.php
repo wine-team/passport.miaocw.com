@@ -6,14 +6,14 @@ class Login extends MW_Controller
         $this->load->helper(array('ip','email'));
         $this->load->library(array('encrypt', 'sms/sms'));
         $this->load->library('alipayauth/aliLogin', NULL, 'aliLogin');
-        $this->load->model('advert_model', 'advert');
-        $this->load->model('user_model', 'user');
-        $this->load->model('user_bind_model','user_bind');
-        $this->load->model('user_log_model','user_log');
-        $this->load->model('user_coupon_set_model','user_coupon_set');
-        $this->load->model('user_coupon_get_model','user_coupon_get');
-        $this->load->model('getpwd_phone_model', 'getpwd_phone');
-        $this->load->model('user_invite_code_model','user_invite_code');
+        $this->load->model('pc/advert_model', 'advert');
+        $this->load->model('pc/user_model', 'user');
+        $this->load->model('pc/user_bind_model', 'user_bind');
+        $this->load->model('pc/user_log_model', 'user_log');
+        $this->load->model('pc/user_coupon_set_model', 'user_coupon_set');
+        $this->load->model('pc/user_coupon_get_model', 'user_coupon_get');
+        $this->load->model('pc/getpwd_phone_model', 'getpwd_phone');
+        $this->load->model('pc/user_invite_code_model', 'user_invite_code');
     }
     
     public function index()
@@ -34,7 +34,7 @@ class Login extends MW_Controller
         $data['advert'] = $this->advert->findBySourceState(2);
         $data['captcha'] = $this->getCaptcha();
         $data['err_count'] = get_cookie('err_count');
-        $this->load->view('login/index', $data);
+        $this->load->view('pc/login/index', $data);
     }
     
      /**
@@ -190,14 +190,14 @@ class Login extends MW_Controller
     	$backurl = $this->input->get('backurl');
     	$invite_code = $this->input->get('invite_code');
     	$param = array(
-    			'app_id' => $app_id,
-    			'method' => "alipay.system.oauth.token",
-    			'charset' => "utf-8",
-    			'sign_type' => "RSA",
-    			'timestamp' => date('Y-m-d H:i:s'),
-    			'version' => "1.0",
-    			'grant_type' => "authorization_code",
-    			'code' => $this->input->get('auth_code'),
+            'app_id' => $app_id,
+            'method' => "alipay.system.oauth.token",
+            'charset' => "utf-8",
+            'sign_type' => "RSA",
+            'timestamp' => date('Y-m-d H:i:s'),
+            'version' => "1.0",
+            'grant_type' => "authorization_code",
+            'code' => $this->input->get('auth_code'),
     	);
     	$param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
     	$result = json_decode($this->fn_get_contents($url,$param,'post'));
@@ -216,13 +216,13 @@ class Login extends MW_Controller
     	
         $url = "https://openapi.alipay.com/gateway.do"; //测试参数
         $param = array(
-                'method' => "alipay.user.userinfo.share",
-                'timestamp' => date('Y-m-d H:i:s'),
-                'app_id' => $app_id,
-                'auth_token' => $auth_token,
-                'charset' => "utf-8",
-                'sign_type' => "RSA",
-                'version' => "1.0",
+            'method' => "alipay.user.userinfo.share",
+            'timestamp' => date('Y-m-d H:i:s'),
+            'app_id' => $app_id,
+            'auth_token' => $auth_token,
+            'charset' => "utf-8",
+            'sign_type' => "RSA",
+            'version' => "1.0",
         );
         $param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
         $result = json_decode($this->fn_get_contents($url,$param,'post'));
@@ -234,17 +234,17 @@ class Login extends MW_Controller
      * 阿里授权登陆操作和妙处网会员综合处置
      * @param unknown $alipayUserInfor
      */
-    private function alipayLoginOperate($alipayUserInfor,$backurl,$invite_code) {
-    	
+    private function alipayLoginOperate($alipayUserInfor,$backurl,$invite_code)
+    {
     	if (empty($alipayUserInfor)) { //如果授权失败
-    		$this->redirect(site_url('register'));
+    		$this->redirect(site_url('pc/register'));
     	}
     	$isAuth = $this->user_bind->getResultByRes(array('other_id'=>$alipayUserInfor->alipay_user_id,'type'=>1),'bind_id,user_id');
     	if ($isAuth->num_rows()>0) { //以前授权过
     		$user_id = $isAuth->row(0)->user_id;
     		$userResult = $this->user->findByUid($user_id);
     		if ($userResult->num_rows()<=0) {
-    			$this->redirect(site_url('register'));
+    			$this->redirect(site_url('pc/register'));
     		}
     		$user = $userResult->row(0);
     		$userInfor = array(
@@ -285,15 +285,15 @@ class Login extends MW_Controller
     		$userLog = $this->user_log->insert($userId, $ip_from=getIP(), $operate_type=1, $status=1);
     		$this->db->trans_complete();
     		if ($this->db->trans_status() === FALSE) {
-    			$this->redirect(site_url('register'));
+    			$this->redirect(site_url('pc/register'));
     		}
     		$userInfor = array(
-    				'uid'       => $userId,
-    				'aliasName' => $param['alias_name'],
-    				'userPhone' => '',
-    				'userEmail' => '',
-    				'parentId'  => $parent_id,
-    				'userPhoto' => $param['photo'],
+                'uid'       => $userId,
+                'aliasName' => $param['alias_name'],
+                'userPhone' => '',
+                'userEmail' => '',
+                'parentId'  => $parent_id,
+                'userPhoto' => $param['photo'],
     		);
     		set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
     		$this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), 7200);
@@ -315,18 +315,18 @@ class Login extends MW_Controller
     	}
     	$couponSet = $couponRes->row(0);
     	$param = array(
-    			'coupon_set_id' => $couponSet->coupon_set_id,
-    			'coupon_name'   => $couponSet->coupon_name,
-    			'uid'           => $uid,
-    			'scope'         => $couponSet->scope,
-    			'related_id'    => $couponSet->related_id,
-    			'amount'        => $couponSet->amount,
-    			'condition'     => $couponSet->condition,
-    			'note'          => $couponSet->note,
-    			'start_time'    => $couponSet->start_time,
-    			'end_time'      => $couponSet->end_time,
-    			'status'        => 1,
-    			'created_at'    => date('Y-m-d H:i:s'),
+            'coupon_set_id' => $couponSet->coupon_set_id,
+            'coupon_name'   => $couponSet->coupon_name,
+            'uid'           => $uid,
+            'scope'         => $couponSet->scope,
+            'related_id'    => $couponSet->related_id,
+            'amount'        => $couponSet->amount,
+            'condition'     => $couponSet->condition,
+            'note'          => $couponSet->note,
+            'start_time'    => $couponSet->start_time,
+            'end_time'      => $couponSet->end_time,
+            'status'        => 1,
+            'created_at'    => date('Y-m-d H:i:s'),
     	);
     
     	$status = $this->user_coupon_get->insert($param);
@@ -342,22 +342,22 @@ class Login extends MW_Controller
       * 第三方应用授权(暂时不启用) --请保留--kxx
       * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7386797.0.0.UiAPWO&treeId=216&articleId=105193&docType=1#s10
      */ 
-    public function thirdAuth() {
-    	
+    public function thirdAuth()
+    {
     	$this->load->library('alipayauth/aliLogin', NULL, 'aliLogin');
     	$url = "https://openapi.alipaydev.com/gateway.do"; //测试url参数
     	$param = array(
-    			'app_id' => $this->input->get('app_id'),
-    			'method' => "alipay.open.auth.token.app",
-    			'charset' => "utf-8",
-    			'sign_type' => "RSA",
-    			'timestamp' => date('Y-m-d H:i:s'),
-    			'version' => "1.0",
-    			'grant_type' => "authorization_code",
+            'app_id' => $this->input->get('app_id'),
+            'method' => "alipay.open.auth.token.app",
+            'charset' => "utf-8",
+            'sign_type' => "RSA",
+            'timestamp' => date('Y-m-d H:i:s'),
+            'version' => "1.0",
+            'grant_type' => "authorization_code",
     	);
     	$param['biz_content'] = json_encode(array(
-    			'grant_type' => "authorization_code",
-    			'code' => $this->input->get('app_auth_code'),
+            'grant_type' => "authorization_code",
+            'code' => $this->input->get('app_auth_code'),
     	));
     	$param['sign'] = $this->aliLogin->generateSign($param,$signType = "RSA"); //验证签名
     	$result = json_decode($this->fn_get_contents($url,$param,'get'));
@@ -365,6 +365,4 @@ class Login extends MW_Controller
     	$auth_auth_token = $alipayTokenResponse->app_auth_token;
     	$app_id = $alipayTokenResponse->auth_app_id;
     }
-   
-  
 }
