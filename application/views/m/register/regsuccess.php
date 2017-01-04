@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header');?>
+<?php $this->load->view('m/layout/header');?>
 <div class="success-register">
     <div class="success-text">
         <p class="suc-your">恭喜您，您已经成功注册妙处网会员！</p>
@@ -11,9 +11,9 @@
     </div>
     <div class="success-text-footer">
         <div class="text-footer clearfix">
-            <img src="passport/images/weixin.png">
+            <img src="m/images/weixin.png">
             <p>扫一扫，关注妙处网微信公众号</p>
         </div>
     </div>
 </div>
-<?php $this->load->view('layout/footer');?>
+<?php $this->load->view('m/layout/footer');?>

@@ -28,4 +28,4 @@
         <p class="lh16">&nbsp;</p><a href="javascript:goback();" class="red U pr10">返回继续购物</a><a href="user.php" class="U red pl10">进入会员中心</a>
     </div>
 </div>
-<?php $this->load->view('passport/layout/footer');?>
+<?php $this->load->view('m/layout/footer');?>

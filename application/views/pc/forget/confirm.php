@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header');?>
+<?php $this->load->view('pc/layout/header');?>
 
 <div class="add-names">
 <!--     <div class="add-fonter clearfix">
@@ -78,4 +78,4 @@
         </div>
     </div>
 </div>
-<?php $this->load->view('layout/footer');?>
+<?php $this->load->view('pc/layout/footer');?>

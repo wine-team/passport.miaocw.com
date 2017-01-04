@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header');?>
+<?php $this->load->view('pc/layout/header');?>
 <div class="register detailmain">
     <div class="apartfrom clearfix">
         <div class="apartfrom-left">
@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="apartfrom-left-test">
-                <form class="register-form-validate" action="<?php echo site_url('register/doRegister')?>" method="post">
+                <form class="register-form-validate" action="<?php echo site_url('pc/register/doRegister')?>" method="post">
                     <table class="table">
                         <tr>
                             <td class="apartfrom-cellular">手机号码：</td>
@@ -75,13 +75,12 @@
 					<!-- <a href="javascript:;"><i class="iconfont">&#xe606;</i></a> -->
                     <a href="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2016112403231302&scope=auth_userinfo&redirect_uri=<?php echo base_url('login/alipayAuth');?>&backurl=<?php echo $this->input->get('backurl');?>&invite_code=<?php echo $invite_code ?>"><i class="iconfont zfb">&#xe608;</i></a>
                 </div>
-                <p>已有账号，<a href="<?php echo site_url('login');?>">立即登录</a></p>
+                <p>已有账号，<a href="<?php echo site_url('pc/login');?>">立即登录</a></p>
             </div>
             <div class="apartfrom-img">
-                <img src="passport/images/zhuc.jpg">
+                <img src="passport/pc/images/zhuc.jpg">
             </div>
         </div>
     </div>
 </div>
-
-<?php $this->load->view('layout/footer');?>
+<?php $this->load->view('pc/layout/footer');?>

@@ -1,15 +1,15 @@
-<?php $this->load->view('layout/header');?>
+<?php $this->load->view('pc/layout/header');?>
 <div class="bz-login">
     <div class="login-img">
         <?php if ($advert->num_rows() > 0) : ?>
             <?php foreach ($advert->result() as $item) : ?>
-                <img src="<?php echo isset($item->picture) ? $this->config->show_image_url('advert', $item->picture) : 'passport/images/login-bg.jpg' ?>"/>
+                <img src="<?php echo isset($item->picture) ? $this->config->show_image_url('advert', $item->picture) : 'passport/pc/images/login-bg.jpg' ?>"/>
             <?php endforeach;?>
         <?php endif; ?>
     </div>
     <div class="login-con">
         <div class="login">
-            <form class="normal-login login-form-validate" action="<?php echo base_url('login/loginPost');?>" method="post" >
+            <form class="normal-login login-form-validate" action="<?php echo base_url('pc/login/loginPost');?>" method="post" >
                 <input type="hidden" name="backurl" value="<?php echo $backurl;?>">
                 <input class="d-quick" type="hidden" name="act" value="1"/>
                 <ul>
@@ -37,7 +37,7 @@
                             <label>
                                 <input type="checkbox" name="auto_login" checked="checked" value="1"/>自动登录
                             </label>
-                            <a target="_blank" href="<?php echo site_url('forget')?>" class="forget">忘记密码?</a>
+                            <a target="_blank" href="<?php echo site_url('pc/forget')?>" class="forget">忘记密码?</a>
                         </div>
                     </li>
                     <li>
@@ -47,10 +47,10 @@
                         </div>
                     </li>
                     <li><button type="submit" class="login-submit d-login">登 录</button></li>
-                    <li><div class="bz-register">还没有账号，<a href="<?php echo site_url('register')?>">立即注册</a></div></li>
+                    <li><div class="bz-register">还没有账号，<a href="<?php echo site_url('pc/register')?>">立即注册</a></div></li>
                 </ul>
                 <div class="hd">
-                    <img src="passport/images/fast-login.png" />
+                    <img src="passport/pc/images/fast-login.png" />
                 </div>
             </form>
             <form class="quick-login">
@@ -93,13 +93,13 @@
                         </div>
                     </li>
                     <li><button type="submit" class="login-submit e-login">登 录</button></li>
-                    <li><div class="bz-register">还没有账号，<a href="<?php echo site_url('register')?>">立即注册</a></div></li>
+                    <li><div class="bz-register">还没有账号，<a href="<?php echo site_url('pc/register')?>">立即注册</a></div></li>
                 </ul>
                 <div class="hd">
-                    <img src="passport/images/members-login.png" />
+                    <img src="passport/pc/images/members-login.png" />
                 </div>
             </form>
         </div>
     </div>
 </div>
-<?php $this->load->view('layout/footer');?>
+<?php $this->load->view('pc/layout/footer');?>

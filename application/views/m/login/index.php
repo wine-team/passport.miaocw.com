@@ -1,9 +1,9 @@
-<?php $this->load->view('passport/layout/header');?>
+<?php $this->load->view('m/layout/header');?>
 <div id="top">
     <div class="header">
         <a href="javascript:goback();" class="b_l"></a>
         <h2>登录</h2>
-        <a href="<?php echo site_url('passport/login/reg')?>" class="b_r">去注册</a>
+        <a href="<?php echo site_url('m/login/reg')?>" class="b_r">去注册</a>
     </div>
 </div>
 <div class="pageauto login-reg" id="lbefore">
@@ -27,7 +27,7 @@
 </div>
 <div class="pageauto hid loginscuess" id="loginscuess">
     <div class="lgxx">
-        <img src="m/images/bigyes.png" width="50" height="50">
+        <img src="passport/m/images/bigyes.png" width="50" height="50">
         <h2 class="f16" style="color:#0ba816;margin-top:1rem;">恭喜，登录成功！</h2>
         <p>
             <b id="tims">5</b>秒后自动返回到上一页
@@ -39,4 +39,4 @@
         </div>
     </div>
 </div>
-<?php $this->load->view('passport/layout/footer');?>
+<?php $this->load->view('m/layout/footer');?>

@@ -1,4 +1,4 @@
-<?php $this->load->view('layout/header');?>
+<?php $this->load->view('pc/layout/header');?>
 
 <div class="add-names">
 <!--     <div class="add-fonter clearfix">
@@ -36,14 +36,14 @@
         </div>
         <div class="aly-ccx">
             <div class="ccx-li clearfix">
-                <img src="passport/images/tp4.png">
+                <img src="passport/pc/images/tp4.png">
                 <p>您的密码已修改成功！请重新登录</p>
             </div>
             <div class="rutuer"><span id="jump-to-home">10</span>秒后跳转<a href="<?php echo $this->config->passport_url;?>">登录页</a></div>
         </div>
     </div>
 </div>
-<?php $this->load->view('layout/footer');?>
+<?php $this->load->view('pc/layout/footer');?>
 <script type="text/javascript">
 function countDown(secs, surl){
     var jumpTo = document.getElementById('jump-to-home');
