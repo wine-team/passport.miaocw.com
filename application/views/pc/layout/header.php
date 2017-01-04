@@ -10,20 +10,20 @@
 <meta name="description"  content="<?php echo isset($headTittle)?$headTittle:'妙处网,成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品,订购热线888-8888-888!';?>" />
 <title><?php echo isset($headTittle)?$headTittle:'妙处网,性用品,性保健品,正品成人用品网站';?></title> 
 <base href="<?php echo $this->config->skins_url;?>"/>
-<link type="image/x-icon" rel="shortcut icon" href="passport/images/logo.png"/>
-<?php css('passport', 'bootstrap.min');?>
-<?php css('passport', 'reset', '20160415');?>
-<?php css('passport', 'style', '20160415');?>
+<link type="image/x-icon" rel="shortcut icon" href="passport/pc/images/logo.png"/>
+<?php css('passport/pc', 'bootstrap.min');?>
+<?php css('passport/pc', 'reset', '20160415');?>
+<?php css('passport/pc', 'style', '20160415');?>
 
-<?php js('passport', 'jquery-1.10.2');?>
-<?php js('passport', 'bootstrap.min');?>
-<?php js('passport', 'jquery.validate.min');?>
-<?php js('passport', 'jquery.validate.messages_zh');?>
+<?php js('passport/pc', 'jquery-1.10.2');?>
+<?php js('passport/pc', 'bootstrap.min');?>
+<?php js('passport/pc', 'jquery.validate.min');?>
+<?php js('passport/pc', 'jquery.validate.messages_zh');?>
 <!--[if lt IE 10]>
-<?php js('passport', 'placeholder');?>
+<?php js('passport/pc', 'placeholder');?>
 <![endif]-->
 
-<?php js('passport', 'index', '20160415');?>
+<?php js('passport/pc', 'index', '20160415');?>
 </head>
 <body>
 <div class="login-header">
@@ -35,14 +35,14 @@
             <?php 
                 $action = $this->router->fetch_class();
                 echo $action == 'login' ? '欢迎登录' : ( $action == 'register' ? '欢迎注册' : '忘记密码' );
-		    ?>
-		</span>
-		<?php if ($action == 'login' || $action == 'register') :?>
-		<span class="service">24小时客服热线：888-8888-888</span>
-		<?php else :?>
-		<span class="service">
-		    <a href="<?php echo site_url('register')?>">注册</a> <span class="cutoff-line">|</span> <a href="<?php echo site_url('login')?>">登录</a>
-		</span>
-		<?php endif;?>
-	</div>
+            ?>
+        </span>
+        <?php if ($action == 'login' || $action == 'register') :?>
+        <span class="service">24小时客服热线：888-8888-888</span>
+        <?php else :?>
+        <span class="service">
+            <a href="<?php echo site_url('pc/register')?>">注册</a> <span class="cutoff-line">|</span> <a href="<?php echo site_url('pc/login')?>">登录</a>
+        </span>
+        <?php endif;?>
+    </div>
 </div>
