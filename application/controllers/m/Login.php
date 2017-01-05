@@ -3,10 +3,17 @@ class Login extends MW_Controller
 {
     public function _init()
     {
-        $this->d = $this->input->post();
-        $this->load->helper(array('ip', 'email'));
+        $this->load->helper(array('ip','email'));
+        $this->load->library(array('encrypt', 'sms/sms'));
+        $this->load->library('alipayauth/aliLogin', NULL, 'aliLogin');
+        $this->load->model('m/advert_model', 'advert');
         $this->load->model('m/user_model', 'user');
+        $this->load->model('m/user_bind_model', 'user_bind');
         $this->load->model('m/user_log_model', 'user_log');
+        $this->load->model('m/user_coupon_set_model', 'user_coupon_set');
+        $this->load->model('m/user_coupon_get_model', 'user_coupon_get');
+        $this->load->model('m/getpwd_phone_model', 'getpwd_phone');
+        $this->load->model('m/user_invite_code_model', 'user_invite_code');
     }
 
     public function index()

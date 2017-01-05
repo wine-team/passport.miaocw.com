@@ -13,7 +13,35 @@ class Register extends MW_Controller
         $this->load->model('m/user_coupon_get_model','user_coupon_get');
         $this->load->model('m/user_invite_code_model','user_invite_code');
     }
-      
+
+    /**
+     *注册页面
+     */
+    public function index()
+    {
+        if ($this->frontUser) {
+            $this->redirect($this->config->main_base_url);
+        }
+        $inviteCode = $this->input->get('invite_code');
+        if (!empty($inviteCode)) {
+            $data['invite_code'] = $inviteCode;
+        } else {
+            $data['invite_code'] = get_cookie('invite_code');
+        }
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
+            if (isset($parseUrl['query']) && strpos($parseUrl['query'], 'backurl') !== false) {
+                $data['backurl'] = urldecode(strstr($parseUrl['query'], 'http'));
+            } else {
+                $data['backurl'] = $this->input->get('backurl') ? urldecode($this->input->get('backurl')) : $_SERVER['HTTP_REFERER'];
+            }
+        } else {
+            $data['backurl'] = $this->config->main_base_url;
+        }
+        $data['captcha'] = $this->getCaptcha();
+        $this->load->view('m/register/index', $data);
+    }
+
      /**
      *注册提交页面
      */
