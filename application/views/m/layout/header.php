@@ -24,12 +24,9 @@
 <?php css('passport/m', 'style', 20161205);?>
 
 <?php js('passport/m', 'jquery-1.10.2');?>
-<?php js('passport/m', 'vganswips', 20161205);?>
 <?php js('passport/m', 'layer/layer');?>
 <?php js('passport/m', 'jquery.lazyload.min');?>
 <?php js('passport/m', 'jquery.validate.min');?>
 <?php js('passport/m', 'jquery.validate.messages_zh');?>
-<?php js('passport/m', 'app', 20161205);?>
-<?php js('passport/m', 'car', 20161205);?>
 </head>
 <body>
