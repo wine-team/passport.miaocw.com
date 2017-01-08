@@ -8,8 +8,10 @@
 </div>
 <div class="pageauto login-reg">
     <form action="reg.php" method="post" class="regist" id="regist">
-        <input type="text" name="username" class="linput" id="username" value="" placeholder="手机号码或者邮箱" />
-        <input type="password" name="password" id="password" class="linput lpass" value=""  placeholder="登陆密码至少5位"/>
+        <input type="hidden" name="backurl" value="<?php echo $backurl;?>" />
+        <input type="hidden" name="invite_code" value="<?php echo $invite_code;?>" />
+        <input type="text" name="username" id="username" class="linput" placeholder="请输入手机号码" />
+        <input type="password" name="password" id="password" class="linput lpass" placeholder="登陆密码至少6位"/>
         <p class="lh20">&nbsp;</p>
         <button type="submit" class="gbtn">注 册</button>
         <p class="alC">

@@ -71,7 +71,7 @@ class Register extends MW_Controller
             if ($parent->num_rows() > 0) {
                 $parent_id = $parent->row(0)->uid;
             } else {
-                $this->jsonMessage('邀请码无效');
+                $this->jsonMessage('您传入了无效的参数');
             }
         } else {
             $parent_id = 1;// 妙处网总部

@@ -42,7 +42,7 @@ class Register extends MW_Controller
         $this->load->view('m/register/index', $data);
     }
 
-     /**
+    /**
      *注册提交页面
      */
     public function doRegister()
@@ -50,12 +50,6 @@ class Register extends MW_Controller
         $phone = $this->input->post('phone', TRUE);
         if (empty($phone)) {
             $this->jsonMessage('请输入手机号码');
-        }
-        if (empty($this->d['password'])) {
-        	$this->jsonMessage('请输入密码');
-        }
-        if (empty($this->d['confirm_password'])) {
-        	$this->jsonMessage('请输入确认密码');
         }
         if (strlen($this->d['password']) < 6 || strlen($this->d['confirm_password']) < 6) {
             $this->jsonMessage('密码长度不小于6位');
@@ -75,7 +69,7 @@ class Register extends MW_Controller
             if ($parent->num_rows() > 0) {
                 $parent_id = $parent->row(0)->uid;
             } else {
-                $this->jsonMessage('邀请码无效');
+                $this->jsonMessage('您传入了无效的参数');
             }
         } else {
             $parent_id = 1;// 妙处网总部
@@ -98,7 +92,10 @@ class Register extends MW_Controller
             'parentId'  => $parent_id,
             'userPhoto' => $this->d['photo'],
         );
-        $this->jsonMessage('', $userInfor);
+        set_cookie('frontUser', base64_encode(serialize($userInfor)), 7200);
+        $this->cache->memcached->save('frontUser', base64_encode(serialize($userInfor)), 7200);
+        $backurl = $this->input->post('backurl') ? urldecode($this->input->post('backurl')) : $this->config->passport_url.'m/register/regsuccess.html';
+        $this->jsonMessage('', $backurl);
     }
     
      /**
