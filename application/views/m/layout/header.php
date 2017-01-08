@@ -28,5 +28,6 @@
 <?php js('passport/m', 'jquery.lazyload.min');?>
 <?php js('passport/m', 'jquery.validate.min');?>
 <?php js('passport/m', 'jquery.validate.messages_zh');?>
+<?php js('passport/m', 'index');?>
 </head>
 <body>

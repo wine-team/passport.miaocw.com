@@ -1,7 +1,7 @@
 <?php $this->load->view('m/layout/header');?>
 <div id="top">
     <div class="header">
-        <a href="javascript:goback();" class="b_l"></a>
+        <a href="javascript:goback('<?php echo site_url('m/register')?>');" class="b_l"></a>
         <h2>登录</h2>
         <a href="<?php echo site_url('m/register')?>" class="b_r">去注册</a>
     </div>

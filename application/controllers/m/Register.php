@@ -6,7 +6,7 @@ class Register extends MW_Controller
     public function _init()
     {
         $this->d = $this->input->post();
-        $this->load->helper(array('ip','email'));
+        $this->load->helper(array('ip', 'email', 'common'));
         $this->load->model('m/user_model', 'user');
         $this->load->model('m/user_log_model','user_log');
         $this->load->model('m/user_coupon_set_model','user_coupon_set');
@@ -49,16 +49,13 @@ class Register extends MW_Controller
     {
         $phone = $this->input->post('phone', TRUE);
         if (empty($phone)) {
-            $this->jsonMessage('请输入手机号码');
-        }
-        if (strlen($this->d['password']) < 6 || strlen($this->d['confirm_password']) < 6) {
-            $this->jsonMessage('密码长度不小于6位');
+            $this->jsonMessage('请输入正确的手机号');
         }
         if (!valid_mobile($phone) ) {
             $this->jsonMessage('手机号码格式有误');
         }
-        if ($this->d['password'] != $this->d['confirm_password']) {
-            $this->jsonMessage('密码输入不一致');
+        if (strlen($this->d['password']) < 6) {
+            $this->jsonMessage('密码长度不能小于6位');
         }
         $result = $this->user->validatePhone($phone);
         if ($result->num_rows() > 0) {

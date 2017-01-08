@@ -161,7 +161,7 @@ class Login extends MW_Controller
         if (!valid_mobile($phone)) {
             $this->jsonMessage('手机号码有误');
         }
-        $code = mt_rand(1000, 9999);
+        $code = mt_rand(100000, 999999);
         $this->db->trans_start();
         $result = $this->getpwd_phone->validatePhone(array('phone'=>$phone));
         if ($result->num_rows() > 0) {

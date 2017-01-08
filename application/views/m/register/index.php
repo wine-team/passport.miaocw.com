@@ -1,7 +1,7 @@
 <?php $this->load->view('m/layout/header');?>
 <div id="top">
     <div class="header">
-        <a href="javascript:goback();" class="b_l"></a>
+        <a href="javascript:goback('<?php echo site_url('m/login/index')?>');" class="b_l"></a>
         <h2>注册</h2>
         <a href="<?php echo site_url('m/login/index')?>" class="b_r">去登陆</a>
     </div>
@@ -10,7 +10,7 @@
     <form action="reg.php" method="post" class="regist" id="regist">
         <input type="hidden" name="backurl" value="<?php echo $backurl;?>" />
         <input type="hidden" name="invite_code" value="<?php echo $invite_code;?>" />
-        <input type="text" name="username" id="username" class="linput" placeholder="请输入手机号码" />
+        <input type="text" name="phone" id="phone" class="linput" placeholder="请输入手机号码" />
         <input type="password" name="password" id="password" class="linput lpass" placeholder="登陆密码至少6位"/>
         <p class="lh20">&nbsp;</p>
         <button type="submit" class="gbtn">注 册</button>
