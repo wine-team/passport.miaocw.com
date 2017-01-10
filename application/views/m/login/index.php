@@ -7,12 +7,12 @@
     </div>
 </div>
 <div class="pageauto login-reg" id="lbefore">
-    <form action="<?php echo site_url('m/loginPost')?>" id="login" class="login">
+    <form class="login">
         <input type="hidden" name="act" value="1" />
         <input type="hidden" name="backurl" value="<?php echo $backurl;?>" />
         <input type="text" name="username" id="username" class="linput" placeholder="手机/邮箱" />
         <input type="password" name="password" id="password" class="linput lpass" placeholder="登陆密码"/>
-        <a href="<?php echo site_url('m/register')?>" class="h left">免费注册（送10元优惠券）</a>
+        <a href="<?php echo site_url('m/register')?>" class="h left">免费注册（送8元优惠券）</a>
         <a href="<?php echo site_url('m/forget')?>" style="color:#09F" class="right">忘记密码?</a>
         <div class="clear"></div>
         <button type="submit" class="gbtn">登 录</button>

@@ -8,16 +8,8 @@
 <meta name="title"  content="<?php echo isset($headTittle) ? $headTittle.',妙处网,妙处,妙,处,成人用品玩具-男根增大延迟性保健品-夫妻情趣用品' : '妙处网,妙处,妙,处,成人用品玩具-男根增大延迟性保健品-夫妻情趣用品';?>" />
 <meta name="keywords" content="<?php echo isset($headTittle) ? $headTittle.',妙处网,妙处,妙,处,成人用品,情趣用品,成人用具,性用品,性保健品,性生活用品,性爱用品,成人保健,夫妻保健品' : '妙处网,妙处,妙,处,成人用品,情趣用品,成人用具,性用品,性保健品,性生活用品,性爱用品,成人保健,夫妻保健品';?>" />
 <meta name="description"  content="<?php echo isset($headTittle) ? $headTittle.',妙处网,妙处,妙,处,成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品' : '妙处网,妙处,妙,处,成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品';?>" />
-<meta content="yes" name="apple-mobile-web-app-capable" />
-<meta name="apple-mobile-web-app-title" content="妙处网" />
-<meta content="black" name="apple-mobile-web-app-status-bar-style" />
-<meta name="format-detection" content="telephone=no" />
-<meta content="false" name="twcClient" id="twcClient" />
-<meta name="full-screen" content="yes">
 <meta name="x5-fullscreen" content="true">
-<meta name="browsermode" content="application">
-<meta name="x5-page-mode" content="app">
-<title><?php echo isset($headTittle) ? $headTittle.',妙处网,妙处,妙,处,性用品,性保健品,正品成人用品网站' : '妙处网,妙处,妙,处,性用品,性保健品,正品成人用品网站';?></title> 
+<title><?php echo isset($headTittle) ? $headTittle.',妙处网,妙处,妙,处,性用品,性保健品,正品成人用品网站' : '妙处网,妙处,妙,处,性用品,性保健品,正品成人用品网站';?></title>
 <base href="<?php echo $this->config->skins_url;?>"/>
 <link type="image/x-icon" rel="shortcut icon" href="passport/m/images/logo.png"/>
 <?php css('passport/m', 'reset', 20161205);?>

@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="pageauto login-reg">
-    <form action="reg.php" method="post" class="regist" id="regist">
+    <form method="post" class="register">
         <input type="hidden" name="backurl" value="<?php echo $backurl;?>" />
         <input type="hidden" name="invite_code" value="<?php echo $invite_code;?>" />
         <input type="text" name="phone" id="phone" class="linput" placeholder="请输入手机号码" />
