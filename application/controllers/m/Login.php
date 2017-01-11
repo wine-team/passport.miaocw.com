@@ -35,7 +35,6 @@ class Login extends MW_Controller
         $this->load->view('m/login/index', $data);
     }
 
-
     /**
      * 登录提交页面
      */
@@ -62,7 +61,7 @@ class Login extends MW_Controller
             }
             $user = $result->row();
             if ($user->flag == 2) {
-                set_cookie('err_count', $err_count + 1, 43200);
+                set_cookie('err_count', $err_count + 1, 120);
                 echo json_encode(array(
                     'status'  => false,
                     'messages' => '此帐号已被冻结，请与管理员联系',
@@ -70,7 +69,7 @@ class Login extends MW_Controller
                 ));exit;
             }
             //验证码验证
-            if ($err_count >= 3) {
+            if ($err_count >= 10) {
                 if (strtoupper($d['captcha']) != strtoupper(get_cookie('captcha'))) {
                     echo json_encode(array(
                         'status'  => false,

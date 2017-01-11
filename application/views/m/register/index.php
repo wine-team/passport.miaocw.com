@@ -10,8 +10,8 @@
     <form method="post" class="register">
         <input type="hidden" name="backurl" value="<?php echo $backurl;?>" />
         <input type="hidden" name="invite_code" value="<?php echo $invite_code;?>" />
-        <input type="text" name="phone" id="phone" class="linput" placeholder="请输入手机号码" />
-        <input type="password" name="password" id="password" class="linput lpass" placeholder="登陆密码至少6位"/>
+        <input type="text" name="phone" class="linput" placeholder="请输入手机号码" />
+        <input type="password" name="password" class="linput lpass" placeholder="登陆密码至少6位"/>
         <p class="lh20">&nbsp;</p>
         <button type="submit" class="gbtn">注 册</button>
         <p class="alC">

@@ -51,7 +51,7 @@ class Register extends MW_Controller
         if (empty($phone)) {
             $this->jsonMessage('请输入正确的手机号');
         }
-        if (!valid_mobile($phone) ) {
+        if (!valid_mobile($phone)) {
             $this->jsonMessage('手机号码格式有误');
         }
         if (strlen($this->d['password']) < 6) {
@@ -61,7 +61,7 @@ class Register extends MW_Controller
         if ($result->num_rows() > 0) {
             $this->jsonMessage('该用户名已经存在');
         }
-        if (isset($this->d['invite_code'])) {
+        if (!empty($this->d['invite_code'])) {
             $parent = $this->user_invite_code->validateInviteCode($this->d['invite_code']);
             if ($parent->num_rows() > 0) {
                 $parent_id = $parent->row(0)->uid;
