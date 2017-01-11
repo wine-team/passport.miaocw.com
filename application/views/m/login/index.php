@@ -26,4 +26,3 @@
         </p>
     </form>
 </div>
-<?php $this->load->view('m/layout/footer');?>
