@@ -18,6 +18,6 @@
         <p class="alC lh30">
             <a href="<?php echo site_url('m/login/index')?>" class="f14 h">已有帐号？点击登录</a>
         </p>
-        <p class="alC"><a href="">网站首页</a> | <a class="red" href="app.php">APP下载</a></p>
+        <p class="alC"><a href="<?php echo $this->config->m_base_url.'sex/home/index.html'; ?>">网站首页</a> | <a class="red" href="<?php echo $this->config->m_base_url.'sex/home/category.html'; ?>">商品分类</a></p>
     </form>
 </div>

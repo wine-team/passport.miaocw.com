@@ -7,6 +7,8 @@ class MW_Config extends CI_Config
 	public $passport_url   =  'http://passport.miaocw.com/';
 	public $help_url       =  'http://help.miaocw.com/';
 	public $ucenter_url    =  'http://ucenter.miaocw.com/';
+	public $m_base_url     =  'http://m.miaocw.com/';
+    public $api_url        =  'http://api.miaocw.com/';
     
      /**
      * 图片上传路径

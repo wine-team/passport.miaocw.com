@@ -17,12 +17,14 @@
         <div class="clear"></div>
         <button type="submit" class="gbtn">登 录</button>
         <p>&nbsp;</p>
+        <!--  
         <p class="alC lh30">
             <a href="/connect/login.php?platform=qq" class="lgqq hid">QQ登录</a>
             <a href="/connect/login.php?platform=weibo" class="lgweibo hid">微博登录</a>
         </p>
+        -->
         <p class="alC">
-            <a href="<?php echo $this->config->main_base_url; ?>">网站首页</a> | <a class="red" href="app.php">APP下载</a>
+            <a href="<?php echo $this->config->m_base_url.'sex/home/index.html'; ?>">网站首页</a> | <a class="red" href="<?php echo $this->config->m_base_url.'sex/home/category.html'; ?>">商品分类</a>
         </p>
     </form>
 </div>
