@@ -298,6 +298,10 @@ class CI_Router {
 		{
 			$method = 'index';
 		}
+		
+		if (!$this->directory) {
+			$this->directory = $this->routes['default_directory'].'/';
+		}
 
 		if ( ! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
 		{
