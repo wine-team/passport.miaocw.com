@@ -26,6 +26,8 @@ class MW_Controller extends CI_Controller
         }
         $this->_init(); //用着重载
         
+        $this->checkBroswer(); // 检查浏览器内容
+        
         // 开发模式下开启性能分析
         if (ENVIRONMENT === 'development') {
             $this->output->enable_profiler(TRUE);
@@ -33,6 +35,14 @@ class MW_Controller extends CI_Controller
     }
     
     public function _init() {}
+    
+    private function checkBroswer() {
+    
+    	$this->load->library('user_agent');
+    	if ($this->agent->is_mobile()) {
+    		redirect(site_url('m/login/index'));
+    	}
+    }
     
     /**
      * 验证get参数，如果get参数有一个值不为空，则返回true
