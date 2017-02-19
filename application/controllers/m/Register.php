@@ -36,7 +36,7 @@ class Register extends MW_Controller
                 $data['backurl'] = $this->input->get('backurl') ? urldecode($this->input->get('backurl')) : $_SERVER['HTTP_REFERER'];
             }
         } else {
-            $data['backurl'] = $this->config->main_base_url;
+            $data['backurl'] = $this->config->m_base_url;
         }
         $data['captcha'] = $this->getCaptcha();
         $this->load->view('m/register/index', $data);

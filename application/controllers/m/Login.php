@@ -18,7 +18,7 @@ class Login extends MW_Controller
     public function index()
     {
         if ($this->frontUser) {
-            $this->redirect($this->config->main_base_url);
+            $this->redirect($this->config->m_base_url);
         }
         if (isset($_SERVER['HTTP_REFERER'])) {
             $parseUrl = parse_url($_SERVER['HTTP_REFERER']);
@@ -28,7 +28,7 @@ class Login extends MW_Controller
                 $data['backurl'] = $_SERVER['HTTP_REFERER'];
             }
         } else {
-            $data['backurl'] = $this->config->main_base_url;
+            $data['backurl'] = $this->config->m_base_url;
         }
         $data['captcha'] = $this->getCaptcha();
         $data['err_count'] = get_cookie('err_count');
