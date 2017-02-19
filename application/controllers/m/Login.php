@@ -141,7 +141,7 @@ class Login extends MW_Controller
             delete_cookie('frontUser');
         }
         $this->cache->memcached->delete('frontUser');
-        $this->redirect($this->config->main_base_url);
+        $this->redirect($this->config->m_base_url);
     }
 
     /**
